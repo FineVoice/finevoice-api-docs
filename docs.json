@@ -32,13 +32,13 @@
             "pages": [
               "index",
               "quickstart",
-              "development"
+              "changelog"
             ]
           },
           {
             "group": "Pricing",
             "pages": [
-              "essentials/settings"
+              "essentials/api-pricing"
             ]
           },
           {
