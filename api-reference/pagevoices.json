@@ -83,7 +83,7 @@
             "example": 10
           },
           {
-            "name": "Authorization",
+            "name": "authorization",
             "in": "header",
             "required": true,
             "schema": {
