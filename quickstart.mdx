@@ -28,12 +28,14 @@ This guide will walk you through generating your first text-to-speech audio with
         On the “Sign up” or “Sign in” page, click “Continue with Email”. Then, enter your email address and password and click “Sign up” or “Sign in”. You will receive a verification email in your mailbox. Find the mail and click the verification link to complete registration.
       </Step>
     </Steps>
+
     **3. Log in to your account and navigate to the usercenter**
   </Accordion>
+
   <Accordion title="Get your API key" icon="rectangle-terminal">
-    1.  Go to https://finevoice.ai/usercenter
-    1.  Navigate to the API Tokens
-    1.  Generate Secret Key
+    1.  Go to [https://finevoice.ai/usercenter](https://finevoice.ai/usercenter)
+    2.  Navigate to the API Tokens
+    3.  Generate Secret Key
 
     <Tip>
       Keep your API key secret! Never commit it to version control or share it publicly.
@@ -56,7 +58,7 @@ Let’s create your first audio file from text.
         ```
       </Step>
       <Step title="Make the TTS request">
-        > The following example uses the default voice. To use a different voice, change the `voice` parameter and provide the model name from FineVoice. You can retrieve detailed information about available voices using the methods below. [**[View Voice API]**](https://fvdocs.fineshare.com/api-reference/endpoint/getvoicedetail)
+        > The following example uses the default voice. To use a different voice, change the `voice` parameter and provide the model name from FineVoice. You can retrieve detailed information about available voices using the methods below. [**\[View Voice API\]**](https://fvdocs.fineshare.com/api-reference/endpoint/getvoicedetail)
 
         Run this **cURL** command to generate your first voice:
 
@@ -65,7 +67,7 @@ Let’s create your first audio file from text.
           -H "Authorization: Bearer $FINEVOICE_API_KEY" \
           -H "Content-Type: application/json" \
           -d '{
-          "Engine": "v7",
+          "Engine": "v2",
           "AppId": "107",
           "FeatureId": "22",
           "speech": "[happy] Hi, welcome to today’s video! In this episode, [breathe] I’ll show you some practical voice generation tips that can make your audio projects a lot easier and more creative. [clear_throat] Stick around, and let’s jump right in!",
