@@ -11,7 +11,7 @@
         "description": "Provides progress details based on the `authorization` query parameter.",
         "parameters": [
           {
-            "name": "Authorization",
+            "name": "authorization",
             "in": "query",
             "description": "Authentication token provided as a query parameter.",
             "required": true,
