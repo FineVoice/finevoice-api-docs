@@ -2,8 +2,8 @@
   "openapi": "3.0.1",
   "info": {
     "title": "Text-to-Speech",
-    "description": "API for converting text to speech using FSMSTextToSpeech.",
-    "version": "1.0.0"
+    "description": "FineVoice Text-to-Speech (TTS) API for converting text into natural-sounding speech.",
+    "version": "1.1.0"
   },
   "servers": [
     {
@@ -32,7 +32,7 @@
         "parameters": [
           {
             "in": "header",
-            "name": "Authorization",
+            "name": "authorization",
             "required": true,
             "schema": {
               "type": "string"
@@ -88,17 +88,17 @@
       "TTSReqData": {
         "type": "object",
         "properties": {
-          "Engine": {
+          "engine": {
             "type": "string",
 			"enum": ["v2", "v1"],
             "description": "The engine to use for text-to-speech. If you are using a custom cloned model, please pass V2. The supported engine for the corresponding model can be obtained by querying the AI Voice Model's detailed information."
           },
-          "AppId": {
+          "appid": {
             "type": "string",
 			"enum": ["107"],
             "description": "The application identifier."
           },
-          "FeatureId": {
+          "featureid": {
             "type": "string",
 			"enum": ["22"],
             "description": "The feature identifier."
@@ -116,7 +116,7 @@
 			"enum": ["web","win","mac","phone"],
             "description": "The platform for which the speech is generated."
           },
-          "Parameter": {
+          "parameter": {
             "$ref": "#/components/schemas/TextToSpeechParameter"
           }
         }
@@ -124,16 +124,16 @@
       "TextToSpeechParameter": {
         "type": "object",
         "properties": {
-          "Speed": {
+          "speed": {
             "type": "number",
             "description": "Speed of the speech.",
 			"example": "1.0"
           },
-          "LanguageCode": {
+          "languagecode": {
             "type": "string",
             "description": "Input language code. The supported language code for the corresponding model can be obtained by querying the AI voice for detailed information."
           },
-          "Pitch": {
+          "pitch": {
             "type": "number",
             "description": "Pitch adjustment for the voice.",
 			"example": "0.0"
