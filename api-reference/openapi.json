@@ -91,7 +91,7 @@
           "Engine": {
             "type": "string",
 			"enum": ["v1", "v5", "v7"],
-            "description": "The engine to use for text-to-speech."
+            "description": "The engine to use for text-to-speech. If you are using a custom cloned model, please pass V2. The supported engine for the corresponding model can be obtained by querying the AI Voice Model's detailed information."
           },
           "AppId": {
             "type": "string",
@@ -131,7 +131,7 @@
           },
           "LanguageCode": {
             "type": "string",
-            "description": "Input language code."
+            "description": "Input language code. The supported language code for the corresponding model can be obtained by querying the AI voice for detailed information."
           },
           "Pitch": {
             "type": "number",
