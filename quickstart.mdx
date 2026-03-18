@@ -61,7 +61,7 @@ Let’s create your first audio file from text.
         > The following example uses the default voice. To use a different voice, change the `voice` parameter and provide the model name from FineVoice. You can retrieve detailed information about available voices using the methods below. [**\[View Voice API\]**](https://fvdocs.fineshare.com/api-reference/endpoint/getvoicedetail)
 
         <Tip>
-          Since FineVoice has multiple versions of voice models, the `voice` parameter should use the `name` returned value from the detailed API response ([https://api.finevoice.ai/api-reference/endpoint/changeaudiofile](https://api.finevoice.ai/api-reference/endpoint/changeaudiofile)). The `LanguageCode` is also included in that response.
+          Since FineVoice provides multiple versions of voice models, the `voice` parameter should use the `name` field returned by the [AI Voice Detail API](https://api.finevoice.ai/api-reference/endpoint/changeaudiofile), and the `LanguageCode` is also included in the response JSON.
         </Tip>
 
         Run this **cURL** command to generate your first voice:
