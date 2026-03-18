@@ -90,7 +90,7 @@
         "properties": {
           "Engine": {
             "type": "string",
-			"enum": ["v1", "v2"],
+			"enum": ["v2", "v1"],
             "description": "The engine to use for text-to-speech. If you are using a custom cloned model, please pass V2. The supported engine for the corresponding model can be obtained by querying the AI Voice Model's detailed information."
           },
           "AppId": {
