@@ -45,7 +45,7 @@
             }
           },
           {
-            "name": "Authorization",
+            "name": "authorization",
             "in": "header",
             "required": true,
             "description": "Authorization token.",
