@@ -67,7 +67,7 @@
           {
             "group": "AI Voices",
             "pages": [
-              "api-reference/ai-voices/untitled-page",
+              "api-reference/ai-voices/getvoices",
               "api-reference/endpoint/changeaudiofile"
             ]
           },
