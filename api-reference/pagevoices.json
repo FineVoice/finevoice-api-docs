@@ -35,7 +35,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "Category of the voices.",
+            "description": "Category of the voices. For custom models, pass the value my_voices.",
             "example": "narration"
           },
           {
@@ -162,7 +162,7 @@
               "properties": {
                 "id": {
                   "type": "string",
-                  "example": "voice123"
+                  "example": "Nabuless"
                 },
                 "name": {
                   "type": "string",
