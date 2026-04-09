@@ -4,6 +4,12 @@
     "title": "Websocket progress",
     "version": "1.0.0"
   },
+  "servers": [
+    {
+      "url": "https://voiceai.fineshare.net/",
+      "description": "Voices"
+    }
+  ],
   "paths": {
     "/ws": {
       "get": {
