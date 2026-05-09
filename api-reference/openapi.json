@@ -3,7 +3,7 @@
   "info": {
     "title": "Text-to-Speech",
     "description": "FineVoice Text-to-Speech (TTS) API for converting text into natural-sounding speech.",
-    "version": "1.1.0"
+    "version": "1.0.0"
   },
   "servers": [
     {
@@ -12,72 +12,36 @@
     }
   ],
   "paths": {
-    "/api/fsmstexttospeech": {
+    "/v1/speech-synthesis": {
       "post": {
         "tags": [
-          "Text-to-Speech"
+          "Audio"
         ],
-        "summary": "Converts text to speech using specified parameters.",
-        "operationId": "FSMSTextToSpeech",
+        "summary": "Converts text to speech using a selected AI voice model.",
+        "operationId": "SpeechSynthesis",
         "requestBody": {
           "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/TTSReqData"
+                "$ref": "#/components/schemas/TTSReqModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TTSReqModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/TTSReqModel"
               }
             }
           }
         },
-        "parameters": [
-          {
-            "in": "header",
-            "name": "authorization",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Bearer token for authentication."
-          }
-        ],
         "responses": {
           "200": {
-            "description": "Successfully processed the text-to-speech request.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "example": "Text-to-speech processing successful."
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid input data.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string",
-                      "example": "Bad Request"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized access."
-          },
-          "500": {
-            "description": "Internal server error."
+            "description": "OK"
           }
         }
       }
@@ -85,60 +49,19 @@
   },
   "components": {
     "schemas": {
-      "TTSReqData": {
+      "TTSReqModel": {
         "type": "object",
         "properties": {
-          "engine": {
-            "type": "string",
-			"enum": ["v2", "v1"],
-            "description": "The engine to use for text-to-speech. If you are using a custom cloned model, please pass V2. The supported engine for the corresponding model can be obtained by querying the AI Voice Model's detailed information."
-          },
-          "appid": {
-            "type": "string",
-			"enum": ["107"],
-            "description": "The application identifier."
-          },
-          "featureid": {
-            "type": "string",
-			"enum": ["22"],
-            "description": "The feature identifier."
-          },
-          "speech": {
-            "type": "string",
-            "description": "The input text to convert to speech."
-          },
           "voice": {
             "type": "string",
-            "description": "The voice configuration."
+            "nullable": true
           },
-          "platform": {
+          "text": {
             "type": "string",
-			"enum": ["web","win","mac","phone"],
-            "description": "The platform for which the speech is generated."
-          },
-          "parameter": {
-            "$ref": "#/components/schemas/TextToSpeechParameter"
+            "nullable": true
           }
-        }
-      },
-      "TextToSpeechParameter": {
-        "type": "object",
-        "properties": {
-          "speed": {
-            "type": "number",
-            "description": "Speed of the speech.",
-			"example": "1.0"
-          },
-          "languagecode": {
-            "type": "string",
-            "description": "Input language code. The supported language code for the corresponding model can be obtained by querying the AI voice for detailed information."
-          },
-          "pitch": {
-            "type": "number",
-            "description": "Pitch adjustment for the voice.",
-			"example": "0.0"
-          }
-        }
+        },
+        "additionalProperties": false
       }
     }
   }

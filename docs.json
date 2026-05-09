@@ -78,12 +78,6 @@
               "api-reference/endpoint/listmodels",
               "api-reference/endpoint/delete"
             ]
-          },
-          {
-            "group": "Websocket Progress",
-            "pages": [
-              "api-reference/endpoint/createaudiochanger"
-            ]
           }
         ]
       }
