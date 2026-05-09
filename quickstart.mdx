@@ -68,7 +68,7 @@ All audio processing endpoints work the same way:
     ```
 
     | Status | Meaning |
-    |--------|---------|
+    | --- | --- |
     | `pending` | Task queued, not yet started |
     | `processing` | Task is being processed |
     | `completed` | Task finished — `url` contains the download link |
@@ -85,7 +85,7 @@ All audio processing endpoints work the same way:
 
 ## 1. Text to Speech
 
-Convert text into natural-sounding speech. Supports 1,500+ AI voices and emotion tags like `[happy]`, `[sad]`, `[breathe]`.
+Convert text into natural-sounding speech. Supports 1,500\+ AI voices and emotion tags like `[happy]`, `[sad]`, `[breathe]`.
 
 <Tabs>
   <Tab title="cURL">
@@ -134,18 +134,18 @@ Convert text into natural-sounding speech. Supports 1,500+ AI voices and emotion
   <Tab title="Python">
     ```python
     import requests, time
-
+    
     API_KEY = "your_api_key_here"
     BASE_URL = "https://devapi.fineshare.net"
     HEADERS = {"Authorization": f"Bearer {API_KEY}", "Content-Type": "application/json"}
-
+    
     # 1. Submit TTS request
     res = requests.post(f"{BASE_URL}/v1/speech-synthesis", headers=HEADERS,
                         json={"voice": "james",
                               "text": "[happy] Hi, welcome to FineVoice! [breathe] Let me show you what I can do."})
     task_id = res.json()["task_id"]
     print(f"Task submitted: {task_id}")
-
+    
     # 2. Poll for result
     while True:
         result = requests.get(f"{BASE_URL}/v1/tasks/{task_id}", headers=HEADERS).json()
@@ -157,7 +157,7 @@ Convert text into natural-sounding speech. Supports 1,500+ AI voices and emotion
             print(f"Error: {result['error']}")
             break
         time.sleep(2)
-
+    
     # 3. Download
     with open("tts_output.mp3", "wb") as f:
         f.write(requests.get(result["url"]).content)
@@ -214,18 +214,18 @@ Transform the voice in an existing audio file to a different AI voice while pres
   <Tab title="Python">
     ```python
     import requests, time
-
+    
     API_KEY = "your_api_key_here"
     BASE_URL = "https://devapi.fineshare.net"
     HEADERS = {"Authorization": f"Bearer {API_KEY}", "Content-Type": "application/json"}
-
+    
     res = requests.post(f"{BASE_URL}/v1/voice-conversion", headers=HEADERS,
                         json={"voice": "james",
                               "sourceUrl": "https://example.com/audio/original.mp3",
                               "outputFormat": "mp3",
                               "useAsync": True})
     task_id = res.json()["task_id"]
-
+    
     while True:
         result = requests.get(f"{BASE_URL}/v1/tasks/{task_id}", headers=HEADERS).json()
         if result["status"] == "completed":
@@ -235,7 +235,7 @@ Transform the voice in an existing audio file to a different AI voice while pres
             print(f"Error: {result['error']}")
             break
         time.sleep(2)
-
+    
     with open("converted.mp3", "wb") as f:
         f.write(requests.get(result["url"]).content)
     ```
@@ -274,7 +274,7 @@ Generate royalty-free sound effects from a text description. Perfect for videos,
         ```bash
         curl -X GET https://devapi.fineshare.net/v1/tasks/c3d4e5f6-a7b8-9012-cdef-123456789012 \
           -H "Authorization: Bearer $FINEVOICE_API_KEY"
-
+        
         curl -L -o thunderstorm.mp3 "https://cdn.fineshare.net/output/c3d4e5f6.mp3"
         ```
       </Step>
@@ -283,18 +283,18 @@ Generate royalty-free sound effects from a text description. Perfect for videos,
   <Tab title="Python">
     ```python
     import requests, time
-
+    
     API_KEY = "your_api_key_here"
     BASE_URL = "https://devapi.fineshare.net"
     HEADERS = {"Authorization": f"Bearer {API_KEY}", "Content-Type": "application/json"}
-
+    
     res = requests.post(f"{BASE_URL}/v1/sfx-generation", headers=HEADERS,
                         json={"prompt": "Thunderstorm with heavy rain and distant thunder",
                               "negative_prompt": "music, voices",
                               "duration": 5.0,
                               "useAsync": True})
     task_id = res.json()["task_id"]
-
+    
     while True:
         result = requests.get(f"{BASE_URL}/v1/tasks/{task_id}", headers=HEADERS).json()
         if result["status"] == "completed":
@@ -304,7 +304,7 @@ Generate royalty-free sound effects from a text description. Perfect for videos,
             print(f"Error: {result['error']}")
             break
         time.sleep(2)
-
+    
     with open("thunderstorm.mp3", "wb") as f:
         f.write(requests.get(result["url"]).content)
     ```
@@ -353,7 +353,7 @@ Separate vocals from background music in any audio file. Ideal for remixing, kar
         ```bash
         curl -X GET https://devapi.fineshare.net/v1/tasks/d4e5f6a7-b8c9-0123-defa-234567890123 \
           -H "Authorization: Bearer $FINEVOICE_API_KEY"
-
+        
         curl -L -o vocals.mp3 "https://cdn.fineshare.net/output/d4e5f6a7.mp3"
         ```
       </Step>
@@ -362,17 +362,17 @@ Separate vocals from background music in any audio file. Ideal for remixing, kar
   <Tab title="Python">
     ```python
     import requests, time
-
+    
     API_KEY = "your_api_key_here"
     BASE_URL = "https://devapi.fineshare.net"
     HEADERS = {"Authorization": f"Bearer {API_KEY}", "Content-Type": "application/json"}
-
+    
     res = requests.post(f"{BASE_URL}/v1/separation", headers=HEADERS,
                         json={"sourceUrl": "https://example.com/audio/song.mp3",
                               "model": "default",
                               "useAsync": True})
     task_id = res.json()["task_id"]
-
+    
     while True:
         result = requests.get(f"{BASE_URL}/v1/tasks/{task_id}", headers=HEADERS).json()
         if result["status"] == "completed":
@@ -382,7 +382,7 @@ Separate vocals from background music in any audio file. Ideal for remixing, kar
             print(f"Error: {result['error']}")
             break
         time.sleep(2)
-
+    
     with open("vocals.mp3", "wb") as f:
         f.write(requests.get(result["url"]).content)
     ```
@@ -398,197 +398,3 @@ Need help? Check out these resources:
 - [**API Reference**](https://api.finevoice.ai/api-reference/introduction) — Complete API documentation
 - [**Discord Community**](https://discord.com/invite/HquSyU4Dy8) — Get help from the community
 - [**Support Email**](mailto:support@finevoice.ai) — Contact our support team
-
-## Overview
-
-This guide will walk you through generating your first text-to-speech audio with FineVoice. By the end, you’ll have converted text into natural-sounding speech using our API.
-
-## Quick Get your API Key
-
-<AccordionGroup>
-  <Accordion title="Create a FineVoice account" icon="copy">
-    **1. Visit the FineVoice Website**
-
-    [**Open FineVoice**](https://finevoice.ai/) on your browser, and you can find the “Sign up” / “Sign in” button in the top right corner.
-
-    **2. Choose a Sign-up or Sign-in Method**
-
-    <Steps>
-      <Step title="Method 1: Register/Login with a Google Account">
-        Click “Sign up” or “Sign in” and choose “Continue with Google”. Then, select your Google account. If you are not logged in, enter your password, click “Continue”, and you will successfully log in to FineVoice.
-      </Step>
-      <Step title="Method 2: Register/Login with an Apple Account">
-        On the “Sign up” or “Sign in” page, click “Continue with Apple”. Enter your email address or phone number and click “Continue”. Then, enter your password and click “Sign In”.
-      </Step>
-      <Step title="Method 3: Register/Login with Email">
-        On the “Sign up” or “Sign in” page, click “Continue with Email”. Then, enter your email address and password and click “Sign up” or “Sign in”. You will receive a verification email in your mailbox. Find the mail and click the verification link to complete registration.
-      </Step>
-    </Steps>
-
-    **3. Log in to your account and navigate to the usercenter**
-  </Accordion>
-
-  <Accordion title="Get your API key" icon="rectangle-terminal">
-    1.  Go to [https://finevoice.ai/usercenter](https://finevoice.ai/usercenter)
-    2.  Navigate to the API Tokens
-    3.  Generate Secret Key
-
-    <Tip>
-      Keep your API key secret! Never commit it to version control or share it publicly.
-    </Tip>
-  </Accordion>
-</AccordionGroup>
-
-## **Your First TTS Request**
-
-Let’s create your first audio file from text.
-
-<Tabs>
-  <Tab title="cURL">
-    <Steps>
-      <Step title="Set your API key">
-        Store your API key as an environment variable (recommended approach):
-
-        ```shellscript
-        export FINEVOICE_API_KEY="replace_me"
-        ```
-      </Step>
-      <Step title="Make the TTS request">
-        > The following example uses the default voice. To use a different voice, change the `voice` parameter and provide the model name from FineVoice. You can retrieve detailed information about available voices using the methods below. [**\[View Voice API\]**](https://fvdocs.fineshare.com/api-reference/endpoint/getvoicedetail)
-
-        <Tip>
-          Since FineVoice provides multiple versions of voice models, the `voice` parameter should use the `name` field returned by the [AI Voice Detail API](https://api.finevoice.ai/api-reference/endpoint/changeaudiofile), and the `LanguageCode` is also included in the response JSON.
-        </Tip>
-
-        Run this **cURL** command to generate your first voice:
-
-        ```shellscript
-        curl -X POST https://converter.fineshare.net/api/fsmstexttospeech \
-          -H "Authorization: Bearer $FINEVOICE_API_KEY" \
-          -H "Content-Type: application/json" \
-          -d '{
-          "Engine": "v2",
-          "AppId": "107",
-          "FeatureId": "22",
-          "speech": "[happy] Hi, welcome to today’s video! In this episode, [breathe] I’ll show you some practical voice generation tips that can make your audio projects a lot easier and more creative. [clear_throat] Stick around, and let’s jump right in!",
-          "voice": "james",
-          "platform": "web",
-          "Parameter": {
-            "Speed": 1.0,
-            "LanguageCode": "en-US",
-            "Pitch": 0.0
-          }
-        }'\
-        ```
-
-        Windows Command Prompt:
-
-        ```shellscript
-        curl -X POST https://converter.fineshare.net/api/fsmstexttospeech -H "Authorization: Bearer %FINEVOICE_API_KEY%" -H "Content-Type: application/json" -d "{\"Engine\":\"v7\",\"AppId\":\"107\",\"FeatureId\":\"22\",\"speech\":\"[happy] Hi, welcome to today’s video! In this episode, [breathe] I’ll show you some practical voice generation tips that can make your audio projects a lot easier and more creative. [clear_throat] Stick around, and let’s jump right in!\",\"voice\":\"james\",\"platform\":\"web\",\"Parameter\":{\"Speed\":1.0,\"LanguageCode\":\"en-US\",\"Pitch\":0.0}}"
-        ```
-      </Step>
-      <Step title="Get the Audio Download URL">
-        The response returns a unique `uuid` that identifies the generated audio task.\
-        Use this `uuid` in the subsequent request to retrieve the audio download URL.
-
-        ```shellscript
-        {
-          "uuid": "6d2fec0a-0983-4b3f-b3f8-6038d12187ce",
-          "available_count": 298825,
-          "wordBoundaries": [],
-          "error": {
-            "code": "0001",
-            "message": null
-          }
-        }
-        ```
-
-        Use the following request to check the file generation status and retrieve the audio download URL:
-
-        ```shellscript
-        curl -X GET https://voiceai.fineshare.net/api/checkfilechangestatus/{uuid}
-        ```
-
-        Replace `{uuid}` with the `uuid` returned from the text-to-speech request.\
-        When the audio file is ready, the response will include the audio download URL.
-
-        **Response Example:**
-
-        ```json
-        {
-            "uuid": "6d2fec0a-0983-4b3f-b3f8-6038d12187ce",
-            "client": null,
-            "status": 3,
-            "url": "https://dlaudio.fineshare.net/ovc/6d2fec0a-0983-4b3f-b3f8-6038d12187ce.mp3",
-            "coverUrl": null,
-            "duration": 16,
-            "title": "welcome to today’s video",
-            "error": {
-                "code": "0001",
-                "message": null
-            }
-        }
-        ```
-      </Step>
-      <Step title="Download the Audio File">
-        Run the following cURL command to download the audio file:
-
-        ```shellscript
-        curl -L -o output.mp3 https://dlaudio.fineshare.net/ovc/6d2fec0a-0983-4b3f-b3f8-6038d12187ce.mp3
-        ```
-      </Step>
-      <Step title="Play the Downloaded Audio">
-        The audio has been saved as **output.mp3.** You can play it by:
-
-        - Double-clicking the file or opening it in any media player
-        - Or using the command line:
-
-        ```shellscript
-        # On macOS
-        afplay output.mp3
-        
-        # On Linux
-        mpg123 output.mp3
-        
-        # On Windows
-        start output.mp3
-        ```
-      </Step>
-    </Steps>
-  </Tab>
-</Tabs>
-
-# **List AI Voices**
-
-Explore all AI voices you can use for text-to-speech generation.
-
-<Tabs>
-  <Tab title="cURL">
-    <Steps>
-      <Step title="Set your API key">
-        Store your API key as an environment variable (recommended approach):
-
-        ```shellscript
-        export FINEVOICE_API_KEY="replace_me"
-        ```
-      </Step>
-      <Step title="List Available Voice Models">
-        Retrieve a paginated list of available AI voice models with filters for gender, language, page number, and page size. This API helps you browse and select voices for text-to-speech or voice conversion tasks. [**Check out the API reference here**](https://fvdocs.fineshare.com/api-reference/introduction).
-
-        ```shellscript
-        curl -X GET "https://converter.fineshare.net/api/pagevoices?v=v2&gender=all&language=en-US&page=1&limit=10" \
-          -H "Authorization: Bearer $FINEVOICE_API_KEY" \
-          -o "pagevoices.json"
-        ```
-      </Step>
-    </Steps>
-  </Tab>
-</Tabs>
-
-## **Support**
-
-Need help? Check out these resources:
-
-- [**API Reference**](https://api.finevoice.ai/api-reference/introduction) - Complete API documentation
-- [**Discord Community**](https://discord.com/invite/HquSyU4Dy8) - Get help from the community
-- [**Support Email**](mailto:support@finevoice.ai) - Contact our support team
