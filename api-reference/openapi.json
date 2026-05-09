@@ -328,18 +328,18 @@
           "sourceUrl": {
             "type": "string",
             "nullable": true,
-            "description": "URL of a source video or audio file to generate effects from."
+            "description": "URL of a source video or image file to generate effects from. Required if `sourceType` is provided."
           },
           "sourceType": {
             "type": "string",
             "nullable": true,
-            "description": "Type of the source file. Supported values: `video`, `audio`.",
+            "description": "Type of the source file. Supported values: `video`, `image`. Required if `sourceUrl` is provided.",
             "example": "video"
           },
           "duration": {
             "type": "number",
             "format": "float",
-            "description": "Desired duration of the generated sound effect in seconds.",
+            "description": "Desired duration of the generated sound effect in seconds. Maximum allowed duration is 30 seconds.",
             "example": 5.0
           },
           "useAsync": {
@@ -362,7 +362,7 @@
           "model": {
             "type": "string",
             "nullable": true,
-            "description": "Separation model to use.",
+            "description": "Separation model to use. Supported values: `standard`, `vocals-only`, `instrumental-only`.",
             "example": "default"
           },
           "useAsync": {

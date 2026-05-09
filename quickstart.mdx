@@ -52,7 +52,7 @@ All audio processing endpoints work the same way:
     Send a POST request with your audio task parameters. The API immediately returns a `task_id`.
 
     ```json
-    { "task_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890" }
+    { "task_id": "p1-a1b2c3d4-e5f6-7890-abcd-ef1234567890" }
     ```
   </Step>
   <Step title="Poll for the result">
@@ -60,9 +60,9 @@ All audio processing endpoints work the same way:
 
     ```json
     {
-      "task_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+      "task_id": "p1-a1b2c3d4-e5f6-7890-abcd-ef1234567890",
       "status": "completed",
-      "url": "https://cdn.fineshare.net/output/a1b2c3d4.mp3",
+      "url": "https://dlfile.fineshare.net/audio/a1b2c3d4.mp3",
       "error": null
     }
     ```
@@ -76,7 +76,7 @@ All audio processing endpoints work the same way:
   </Step>
   <Step title="Download the output">
     ```bash
-    curl -L -o output.mp3 "https://cdn.fineshare.net/output/a1b2c3d4.mp3"
+    curl -L -o output.mp3 "https://dlfile.fineshare.net/output/a1b2c3d4.mp3"
     ```
   </Step>
 </Steps>
@@ -104,12 +104,12 @@ Convert text into natural-sounding speech. Supports 1,500\+ AI voices and emotio
         **Response:**
 
         ```json
-        { "task_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890" }
+        { "task_id": "p1-a1b2c3d4-e5f6-7890-abcd-ef1234567890" }
         ```
       </Step>
       <Step title="Poll for result">
         ```bash
-        curl -X GET https://devapi.fineshare.net/v1/tasks/a1b2c3d4-e5f6-7890-abcd-ef1234567890 \
+        curl -X GET https://devapi.fineshare.net/v1/tasks/p1-a1b2c3d4-e5f6-7890-abcd-ef1234567890 \
           -H "Authorization: Bearer $FINEVOICE_API_KEY"
         ```
 
@@ -117,16 +117,16 @@ Convert text into natural-sounding speech. Supports 1,500\+ AI voices and emotio
 
         ```json
         {
-          "task_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+          "task_id": "p1-a1b2c3d4-e5f6-7890-abcd-ef1234567890",
           "status": "completed",
-          "url": "https://cdn.fineshare.net/output/a1b2c3d4.mp3",
+          "url": "https://dlfile.fineshare.net/output/a1b2c3d4.mp3",
           "error": null
         }
         ```
       </Step>
       <Step title="Download the audio">
         ```bash
-        curl -L -o tts_output.mp3 "https://cdn.fineshare.net/output/a1b2c3d4.mp3"
+        curl -L -o tts_output.mp3 "https://dlfile.fineshare.net/output/a1b2c3d4.mp3"
         ```
       </Step>
     </Steps>
@@ -185,8 +185,8 @@ Transform the voice in an existing audio file to a different AI voice while pres
           -H "Authorization: Bearer $FINEVOICE_API_KEY" \
           -H "Content-Type: application/json" \
           -d '{
-            "voice": "james",
-            "sourceUrl": "https://example.com/audio/original.mp3",
+            "voice": "madison",
+            "sourceUrl": "https://dlaudio.fineshare.net/web/finevoice3/audio/avc-example-1.mp3",
             "outputFormat": "mp3",
             "useAsync": true
           }'
@@ -195,18 +195,18 @@ Transform the voice in an existing audio file to a different AI voice while pres
         **Response:**
 
         ```json
-        { "task_id": "b2c3d4e5-f6a7-8901-bcde-f12345678901" }
+        { "task_id": "p1-b2c3d4e5-f6a7-8901-bcde-f12345678901" }
         ```
       </Step>
       <Step title="Poll for result">
         ```bash
-        curl -X GET https://devapi.fineshare.net/v1/tasks/b2c3d4e5-f6a7-8901-bcde-f12345678901 \
+        curl -X GET https://devapi.fineshare.net/v1/tasks/p1-b2c3d4e5-f6a7-8901-bcde-f12345678901 \
           -H "Authorization: Bearer $FINEVOICE_API_KEY"
         ```
       </Step>
       <Step title="Download converted audio">
         ```bash
-        curl -L -o converted.mp3 "https://cdn.fineshare.net/output/b2c3d4e5.mp3"
+        curl -L -o converted.mp3 "https://dlfile.fineshare.net/output/b2c3d4e5.mp3"
         ```
       </Step>
     </Steps>
@@ -267,15 +267,15 @@ Generate royalty-free sound effects from a text description. Perfect for videos,
         **Response:**
 
         ```json
-        { "task_id": "c3d4e5f6-a7b8-9012-cdef-123456789012" }
+        { "task_id": "p1-c3d4e5f6-a7b8-9012-cdef-123456789012" }
         ```
       </Step>
       <Step title="Poll and download">
         ```bash
-        curl -X GET https://devapi.fineshare.net/v1/tasks/c3d4e5f6-a7b8-9012-cdef-123456789012 \
+        curl -X GET https://devapi.fineshare.net/v1/tasks/p1-c3d4e5f6-a7b8-9012-cdef-123456789012 \
           -H "Authorization: Bearer $FINEVOICE_API_KEY"
-        
-        curl -L -o thunderstorm.mp3 "https://cdn.fineshare.net/output/c3d4e5f6.mp3"
+
+        curl -L -o thunderstorm.mp3 "https://dlfile.fineshare.net/output/c3d4e5f6.mp3"
         ```
       </Step>
     </Steps>
@@ -337,7 +337,7 @@ Separate vocals from background music in any audio file. Ideal for remixing, kar
           -H "Authorization: Bearer $FINEVOICE_API_KEY" \
           -H "Content-Type: application/json" \
           -d '{
-            "sourceUrl": "https://example.com/audio/song.mp3",
+            "sourceUrl": "https://webresources.fineshare.net/finevoice3/audio/isolator-original.mp3",
             "model": "default",
             "useAsync": true
           }'
@@ -346,15 +346,15 @@ Separate vocals from background music in any audio file. Ideal for remixing, kar
         **Response:**
 
         ```json
-        { "task_id": "d4e5f6a7-b8c9-0123-defa-234567890123" }
+        { "task_id": "p1-d4e5f6a7-b8c9-0123-defa-234567890123" }
         ```
       </Step>
       <Step title="Poll and download">
         ```bash
-        curl -X GET https://devapi.fineshare.net/v1/tasks/d4e5f6a7-b8c9-0123-defa-234567890123 \
+        curl -X GET https://devapi.fineshare.net/v1/tasks/p1-d4e5f6a7-b8c9-0123-defa-234567890123 \
           -H "Authorization: Bearer $FINEVOICE_API_KEY"
-        
-        curl -L -o vocals.mp3 "https://cdn.fineshare.net/output/d4e5f6a7.mp3"
+
+        curl -L -o vocals.mp3 "https://dlfile.fineshare.net/output/d4e5f6a7.mp3"
         ```
       </Step>
     </Steps>
