@@ -357,7 +357,7 @@
             "type": "string",
             "nullable": true,
             "description": "Publicly accessible URL of the audio file to separate.",
-            "example": "https://example.com/audio/song.mp3"
+            "example": "https://webresources.fineshare.net/finevoice3/audio/isolator-original.mp3"
           },
           "model": {
             "type": "string",

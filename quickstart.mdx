@@ -366,7 +366,7 @@ Separate vocals from background music in any audio file. Ideal for remixing, kar
     HEADERS = {"Authorization": f"Bearer {API_KEY}", "Content-Type": "application/json"}
     
     res = requests.post(f"{BASE_URL}/v1/separation", headers=HEADERS,
-                        json={"sourceUrl": "https://example.com/audio/song.mp3",
+              json={"sourceUrl": "https://webresources.fineshare.net/finevoice3/audio/isolator-original.mp3",
                               "model": "default",
                               "useAsync": True})
     task_id = res.json()["task_id"]
