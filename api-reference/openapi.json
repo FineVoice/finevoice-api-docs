@@ -288,13 +288,13 @@
             "type": "string",
             "nullable": true,
             "description": "Target voice model name to convert the audio to.",
-            "example": "james"
+            "example": "madison"
           },
           "sourceUrl": {
             "type": "string",
             "nullable": true,
             "description": "Publicly accessible URL of the source audio file to convert.",
-            "example": "https://example.com/audio/input.mp3"
+            "example": "https://dlaudio.fineshare.net/web/finevoice3/audio/avc-example-1.mp3"
           },
           "outputFormat": {
             "type": "string",
