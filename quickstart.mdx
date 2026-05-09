@@ -217,9 +217,9 @@ Transform the voice in an existing audio file to a different AI voice while pres
     BASE_URL = "https://devapi.fineshare.net"
     HEADERS = {"Authorization": f"Bearer {API_KEY}", "Content-Type": "application/json"}
     
-    res = requests.post(f"{BASE_URL}/v1/voice-conversion", headers=HEADERS,
-                        json={"voice": "james",
-                              "sourceUrl": "https://example.com/audio/original.mp3",
+        res = requests.post(f"{BASE_URL}/v1/voice-conversion", headers=HEADERS,
+            json={"voice": "madison",
+              "sourceUrl": "https://dlaudio.fineshare.net/web/finevoice3/audio/avc-example-1.mp3",
                               "outputFormat": "mp3",
                               "useAsync": True})
     task_id = res.json()["task_id"]
