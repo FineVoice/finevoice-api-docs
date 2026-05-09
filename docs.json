@@ -61,7 +61,7 @@
           {
             "group": "Text to Speech",
             "pages": [
-              "api-reference/endpoint/changeprogress"
+              "api-reference/endpoint/tts"
             ]
           },
           {
