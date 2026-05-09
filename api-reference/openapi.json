@@ -1,48 +1,262 @@
 {
   "openapi": "3.0.1",
   "info": {
-    "title": "Text-to-Speech",
-    "description": "FineVoice Text-to-Speech (TTS) API for converting text into natural-sounding speech.",
-    "version": "1.0.0"
+    "title": "FineVoice API v1.0.0",
+    "description": "This is the documentation for the FineVoice API. If you have any questions or need assistance, please contact support@fineshare.ai.",
+    "version": "v1"
   },
   "servers": [
     {
-      "url": "https://converter.fineshare.net",
-      "description": "Voices"
+      "url": "https://devapi.fineshare.net",
+      "description": "FineVoice API"
     }
   ],
   "paths": {
     "/v1/speech-synthesis": {
       "post": {
-        "tags": [
-          "Audio"
-        ],
-        "summary": "Converts text to speech using a selected AI voice model.",
+        "tags": ["Audio"],
+        "summary": "Text to Speech",
+        "description": "Convert text into natural-sounding speech using a selected AI voice model.",
         "operationId": "SpeechSynthesis",
         "requestBody": {
           "required": true,
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/TTSReqModel"
-              }
+              "schema": { "$ref": "#/components/schemas/TTSReqModel" }
             },
             "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/TTSReqModel"
-              }
+              "schema": { "$ref": "#/components/schemas/TTSReqModel" }
             },
             "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/TTSReqModel"
-              }
+              "schema": { "$ref": "#/components/schemas/TTSReqModel" }
             }
           }
         },
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "required": true,
+            "schema": { "type": "string" },
+            "description": "Bearer token for authentication. Format: `Bearer {your_api_key}`"
+          }
+        ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Task accepted. Returns a task_id for polling status.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "task_id": { "type": "string", "example": "a1b2c3d4-e5f6-7890-abcd-ef1234567890" }
+                  }
+                }
+              }
+            }
+          },
+          "401": { "description": "Unauthorized — invalid or missing API key." },
+          "422": { "description": "Validation error — check request body fields." }
+        }
+      }
+    },
+    "/v1/voice-conversion": {
+      "post": {
+        "tags": ["Audio"],
+        "summary": "Voice Conversion",
+        "description": "Transform the voice in an audio file to a different AI voice while preserving the original content.",
+        "operationId": "VoiceConversion",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/FileChangeReqModel" }
+            },
+            "text/json": {
+              "schema": { "$ref": "#/components/schemas/FileChangeReqModel" }
+            },
+            "application/*+json": {
+              "schema": { "$ref": "#/components/schemas/FileChangeReqModel" }
+            }
           }
+        },
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "required": true,
+            "schema": { "type": "string" },
+            "description": "Bearer token for authentication. Format: `Bearer {your_api_key}`"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Task accepted. Returns a task_id for polling status.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "task_id": { "type": "string", "example": "a1b2c3d4-e5f6-7890-abcd-ef1234567890" }
+                  }
+                }
+              }
+            }
+          },
+          "401": { "description": "Unauthorized — invalid or missing API key." },
+          "422": { "description": "Validation error — check request body fields." }
+        }
+      }
+    },
+    "/v1/sfx-generation": {
+      "post": {
+        "tags": ["Audio"],
+        "summary": "Sound Effect Generation",
+        "description": "Generate royalty-free sound effects from a text prompt or video source.",
+        "operationId": "SfxGeneration",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/EffectReqModel" }
+            },
+            "text/json": {
+              "schema": { "$ref": "#/components/schemas/EffectReqModel" }
+            },
+            "application/*+json": {
+              "schema": { "$ref": "#/components/schemas/EffectReqModel" }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "required": true,
+            "schema": { "type": "string" },
+            "description": "Bearer token for authentication. Format: `Bearer {your_api_key}`"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Task accepted. Returns a task_id for polling status.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "task_id": { "type": "string", "example": "a1b2c3d4-e5f6-7890-abcd-ef1234567890" }
+                  }
+                }
+              }
+            }
+          },
+          "401": { "description": "Unauthorized — invalid or missing API key." },
+          "422": { "description": "Validation error — check request body fields." }
+        }
+      }
+    },
+    "/v1/separation": {
+      "post": {
+        "tags": ["Audio"],
+        "summary": "Audio Separation",
+        "description": "Separate vocals and background music from an audio file using AI.",
+        "operationId": "AudioSeparation",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/IsolateReqModel" }
+            },
+            "text/json": {
+              "schema": { "$ref": "#/components/schemas/IsolateReqModel" }
+            },
+            "application/*+json": {
+              "schema": { "$ref": "#/components/schemas/IsolateReqModel" }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "required": true,
+            "schema": { "type": "string" },
+            "description": "Bearer token for authentication. Format: `Bearer {your_api_key}`"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Task accepted. Returns a task_id for polling status.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "task_id": { "type": "string", "example": "a1b2c3d4-e5f6-7890-abcd-ef1234567890" }
+                  }
+                }
+              }
+            }
+          },
+          "401": { "description": "Unauthorized — invalid or missing API key." },
+          "422": { "description": "Validation error — check request body fields." }
+        }
+      }
+    },
+    "/v1/tasks/{task_id}": {
+      "get": {
+        "tags": ["Audio"],
+        "summary": "Get Task Status",
+        "description": "Poll the status and result of an asynchronous audio processing task.",
+        "operationId": "GetTaskStatus",
+        "parameters": [
+          {
+            "name": "task_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" },
+            "description": "The task ID returned by any async audio processing endpoint."
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "required": true,
+            "schema": { "type": "string" },
+            "description": "Bearer token for authentication. Format: `Bearer {your_api_key}`"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Task status and result.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "task_id": { "type": "string" },
+                    "status": {
+                      "type": "string",
+                      "enum": ["pending", "processing", "completed", "failed"],
+                      "description": "Current status of the task."
+                    },
+                    "url": {
+                      "type": "string",
+                      "nullable": true,
+                      "description": "Download URL of the generated audio file. Available when status is `completed`."
+                    },
+                    "error": {
+                      "type": "string",
+                      "nullable": true,
+                      "description": "Error message if the task failed."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": { "description": "Unauthorized — invalid or missing API key." },
+          "404": { "description": "Task not found." }
         }
       }
     }
@@ -54,11 +268,107 @@
         "properties": {
           "voice": {
             "type": "string",
-            "nullable": true
+            "nullable": true,
+            "description": "The voice model name to use for synthesis. Retrieve available voices from the List Voices API.",
+            "example": "james"
           },
           "text": {
             "type": "string",
-            "nullable": true
+            "nullable": true,
+            "description": "The text to convert to speech. Supports emotion tags such as `[happy]`, `[sad]`, `[breathe]`.",
+            "example": "[happy] Hello! Welcome to FineVoice."
+          }
+        },
+        "additionalProperties": false
+      },
+      "FileChangeReqModel": {
+        "type": "object",
+        "properties": {
+          "voice": {
+            "type": "string",
+            "nullable": true,
+            "description": "Target voice model name to convert the audio to.",
+            "example": "james"
+          },
+          "sourceUrl": {
+            "type": "string",
+            "nullable": true,
+            "description": "Publicly accessible URL of the source audio file to convert.",
+            "example": "https://example.com/audio/input.mp3"
+          },
+          "outputFormat": {
+            "type": "string",
+            "nullable": true,
+            "description": "Output audio format. Supported values: `mp3`, `wav`.",
+            "example": "mp3"
+          },
+          "useAsync": {
+            "type": "boolean",
+            "description": "Set to `true` to process asynchronously and receive a `task_id` for polling. Set to `false` for synchronous processing.",
+            "example": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "EffectReqModel": {
+        "type": "object",
+        "properties": {
+          "prompt": {
+            "type": "string",
+            "nullable": true,
+            "description": "Text description of the sound effect to generate.",
+            "example": "Thunderstorm with heavy rain and distant thunder"
+          },
+          "negative_prompt": {
+            "type": "string",
+            "nullable": true,
+            "description": "Text description of elements to avoid in the generated sound.",
+            "example": "music, voices"
+          },
+          "sourceUrl": {
+            "type": "string",
+            "nullable": true,
+            "description": "URL of a source video or audio file to generate effects from."
+          },
+          "sourceType": {
+            "type": "string",
+            "nullable": true,
+            "description": "Type of the source file. Supported values: `video`, `audio`.",
+            "example": "video"
+          },
+          "duration": {
+            "type": "number",
+            "format": "float",
+            "description": "Desired duration of the generated sound effect in seconds.",
+            "example": 5.0
+          },
+          "useAsync": {
+            "type": "boolean",
+            "description": "Set to `true` to process asynchronously and receive a `task_id` for polling.",
+            "example": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "IsolateReqModel": {
+        "type": "object",
+        "properties": {
+          "sourceUrl": {
+            "type": "string",
+            "nullable": true,
+            "description": "Publicly accessible URL of the audio file to separate.",
+            "example": "https://example.com/audio/song.mp3"
+          },
+          "model": {
+            "type": "string",
+            "nullable": true,
+            "description": "Separation model to use.",
+            "example": "default"
+          },
+          "useAsync": {
+            "type": "boolean",
+            "description": "Set to `true` to process asynchronously and receive a `task_id` for polling.",
+            "example": true
           }
         },
         "additionalProperties": false

@@ -65,6 +65,30 @@
             ]
           },
           {
+            "group": "Voice Conversion",
+            "pages": [
+              "api-reference/endpoint/voice-conversion"
+            ]
+          },
+          {
+            "group": "Sound Effects",
+            "pages": [
+              "api-reference/endpoint/sfx-generation"
+            ]
+          },
+          {
+            "group": "Audio Separation",
+            "pages": [
+              "api-reference/endpoint/separation"
+            ]
+          },
+          {
+            "group": "Task Status",
+            "pages": [
+              "api-reference/endpoint/task-status"
+            ]
+          },
+          {
             "group": "AI Voices",
             "pages": [
               "api-reference/ai-voices/getvoices",
