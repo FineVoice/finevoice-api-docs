@@ -716,7 +716,7 @@ Generate a multi-speaker AI podcast from a prompt or script.
       -H "Content-Type: application/json" \
       -d '{
         "prompt": "A friendly 3-minute discussion about the future of AI voice technology",
-        "speakers": ["james", "madison"],
+        "speakers": ["olivia", "ethan"],
         "style": "conversational",
         "expectedDuration": "3min",
         "useAsync": true
@@ -733,7 +733,7 @@ Generate a multi-speaker AI podcast from a prompt or script.
 
     res = requests.post(f"{BASE_URL}/v1/audio/podcastgen", headers=HEADERS,
                         json={"prompt": "A friendly 3-minute discussion about the future of AI voice technology",
-                              "speakers": ["james", "madison"],
+                              "speakers": ["olivia", "ethan"],
                               "style": "conversational",
                               "expectedDuration": "3min",
                               "useAsync": True})
