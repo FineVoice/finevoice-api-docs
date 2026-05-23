@@ -1,13 +1,5 @@
 import json
 
-auth_param = {
-    "in": "header",
-    "name": "Authorization",
-    "required": True,
-    "schema": {"type": "string"},
-    "description": "Bearer token for authentication. Format: `Bearer {your_api_key}`"
-}
-
 
 def make_post(tag, summary, desc, op_id, schema_ref, resp_desc="Task accepted. Returns a taskId for async polling or the result URL directly.", resp_schema_ref="AudioTaskResponse"):
     return {"post": {
@@ -15,7 +7,6 @@ def make_post(tag, summary, desc, op_id, schema_ref, resp_desc="Task accepted. R
         "summary": summary,
         "description": desc,
         "operationId": op_id,
-        "parameters": [auth_param],
         "requestBody": {
             "required": True,
             "content": {"application/json": {"schema": {"$ref": f"#/components/schemas/{schema_ref}"}}}
@@ -37,7 +28,6 @@ def make_post_obj(tag, summary, desc, op_id, schema_ref, resp_desc):
         "summary": summary,
         "description": desc,
         "operationId": op_id,
-        "parameters": [auth_param],
         "requestBody": {
             "required": True,
             "content": {"application/json": {"schema": {"$ref": f"#/components/schemas/{schema_ref}"}}}
@@ -124,8 +114,7 @@ openapi = {
             "operationId": "GetVoiceDetail",
             "parameters": [
                 {"name": "name", "in": "path", "required": True, "schema": {"type": "string"}, "description": "The voice model name.", "example": "james"},
-                {"name": "desigUuid", "in": "query", "required": False, "schema": {"type": "string"}, "description": "Optional design UUID to retrieve a specific voice design version."},
-                auth_param
+                {"name": "desigUuid", "in": "query", "required": False, "schema": {"type": "string"}, "description": "Optional design UUID to retrieve a specific voice design version."}
             ],
             "responses": {
                 "200": {"description": "Voice detail returned.", "content": {"application/json": {"schema": {"type": "object"}}}},
@@ -153,8 +142,7 @@ openapi = {
                 {"name": "tts", "in": "query", "required": False, "schema": {"type": "boolean"}, "description": "Filter for TTS-compatible voices only."},
                 {"name": "style", "in": "query", "required": False, "schema": {"type": "string"}, "description": "Filter by voice style."},
                 {"name": "age", "in": "query", "required": False, "schema": {"type": "string"}, "description": "Filter by age range."},
-                {"name": "sub_category", "in": "query", "required": False, "schema": {"type": "string"}, "description": "Sub-category filter."},
-                auth_param
+                {"name": "sub_category", "in": "query", "required": False, "schema": {"type": "string"}, "description": "Sub-category filter."}
             ],
             "responses": {
                 "200": {"description": "Paginated list of voice models.", "content": {"application/json": {"schema": {"type": "object"}}}},
@@ -168,8 +156,7 @@ openapi = {
             "description": "Poll the status and result of an asynchronous audio processing task.",
             "operationId": "GetTaskStatus",
             "parameters": [
-                {"name": "task_id", "in": "path", "required": True, "schema": {"type": "string"}, "description": "The task identifier returned by a previous API call.", "example": "a1b2c3d4-e5f6-7890-abcd-ef1234567890"},
-                auth_param
+                {"name": "task_id", "in": "path", "required": True, "schema": {"type": "string"}, "description": "The task identifier returned by a previous API call.", "example": "a1b2c3d4-e5f6-7890-abcd-ef1234567890"}
             ],
             "responses": {
                 "200": {"description": "Task status and result.", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/TaskQueryResponse"}}}},

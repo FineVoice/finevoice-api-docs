@@ -54,7 +54,7 @@ All audio processing endpoints work the same way:
     ```
   </Step>
   <Step title="Poll for the result">
-    Use `GET /v1/tasks/{task_id}` to check status. Poll every 2–3 seconds until `status` is `completed`.
+    Use `GET /v1/task/{task_id}` to check status. Poll every 2–3 seconds until `status` is `completed`.
 
     ```json
     {
@@ -90,7 +90,7 @@ Convert text into natural-sounding speech. Supports 1,500\+ AI voices and emotio
     <Steps>
       <Step title="Submit the TTS request">
         ```bash
-        curl -X POST https://devapi.fineshare.net/v1/speech-synthesis \
+        curl -X POST https://apis.finevoice.ai/v1/audio/speech-synthesis \
           -H "Authorization: Bearer $FINEVOICE_API_KEY" \
           -H "Content-Type: application/json" \
           -d '{
@@ -107,7 +107,7 @@ Convert text into natural-sounding speech. Supports 1,500\+ AI voices and emotio
       </Step>
       <Step title="Poll for result">
         ```bash
-        curl -X GET https://devapi.fineshare.net/v1/tasks/p1-a1b2c3d4-e5f6-7890-abcd-ef1234567890 \
+        curl -X GET https://apis.finevoice.ai/v1/task/p1-a1b2c3d4-e5f6-7890-abcd-ef1234567890 \
           -H "Authorization: Bearer $FINEVOICE_API_KEY"
         ```
 
@@ -134,11 +134,11 @@ Convert text into natural-sounding speech. Supports 1,500\+ AI voices and emotio
     import requests, time
     
     API_KEY = "your_api_key_here"
-    BASE_URL = "https://devapi.fineshare.net"
+    BASE_URL = "https://apis.finevoice.ai"
     HEADERS = {"Authorization": f"Bearer {API_KEY}", "Content-Type": "application/json"}
     
     # 1. Submit TTS request
-    res = requests.post(f"{BASE_URL}/v1/speech-synthesis", headers=HEADERS,
+    res = requests.post(f"{BASE_URL}/v1/audio/speech-synthesis", headers=HEADERS,
                         json={"voice": "james",
                               "text": "[happy] Hi, welcome to FineVoice! [breathe] Let me show you what I can do."})
     task_id = res.json()["task_id"]
@@ -146,7 +146,7 @@ Convert text into natural-sounding speech. Supports 1,500\+ AI voices and emotio
     
     # 2. Poll for result
     while True:
-        result = requests.get(f"{BASE_URL}/v1/tasks/{task_id}", headers=HEADERS).json()
+        result = requests.get(f"{BASE_URL}/v1/task/{task_id}", headers=HEADERS).json()
         print(f"Status: {result['status']}")
         if result["status"] == "completed":
             print(f"Download URL: {result['url']}")
@@ -179,7 +179,7 @@ Transform the voice in an existing audio file to a different AI voice while pres
     <Steps>
       <Step title="Submit the conversion request">
         ```bash
-        curl -X POST https://devapi.fineshare.net/v1/voice-conversion \
+        curl -X POST https://apis.finevoice.ai/v1/audio/voice-conversion \
           -H "Authorization: Bearer $FINEVOICE_API_KEY" \
           -H "Content-Type: application/json" \
           -d '{
@@ -198,7 +198,7 @@ Transform the voice in an existing audio file to a different AI voice while pres
       </Step>
       <Step title="Poll for result">
         ```bash
-        curl -X GET https://devapi.fineshare.net/v1/tasks/p1-b2c3d4e5-f6a7-8901-bcde-f12345678901 \
+        curl -X GET https://apis.finevoice.ai/v1/task/p1-b2c3d4e5-f6a7-8901-bcde-f12345678901 \
           -H "Authorization: Bearer $FINEVOICE_API_KEY"
         ```
       </Step>
@@ -214,18 +214,18 @@ Transform the voice in an existing audio file to a different AI voice while pres
     import requests, time
     
     API_KEY = "your_api_key_here"
-    BASE_URL = "https://devapi.fineshare.net"
+    BASE_URL = "https://apis.finevoice.ai"
     HEADERS = {"Authorization": f"Bearer {API_KEY}", "Content-Type": "application/json"}
     
-        res = requests.post(f"{BASE_URL}/v1/voice-conversion", headers=HEADERS,
-            json={"voice": "madison",
-              "sourceUrl": "https://dlaudio.fineshare.net/web/finevoice3/audio/avc-example-1.mp3",
+    res = requests.post(f"{BASE_URL}/v1/audio/voice-conversion", headers=HEADERS,
+                        json={"voice": "madison",
+                              "sourceUrl": "https://dlaudio.fineshare.net/web/finevoice3/audio/avc-example-1.mp3",
                               "outputFormat": "mp3",
                               "useAsync": True})
     task_id = res.json()["task_id"]
     
     while True:
-        result = requests.get(f"{BASE_URL}/v1/tasks/{task_id}", headers=HEADERS).json()
+        result = requests.get(f"{BASE_URL}/v1/task/{task_id}", headers=HEADERS).json()
         if result["status"] == "completed":
             print(f"Download URL: {result['url']}")
             break
@@ -251,7 +251,7 @@ Generate royalty-free sound effects from a text description. Perfect for videos,
     <Steps>
       <Step title="Submit the SFX request">
         ```bash
-        curl -X POST https://devapi.fineshare.net/v1/sfx-generation \
+        curl -X POST https://apis.finevoice.ai/v1/audio/sfx-generation \
           -H "Authorization: Bearer $FINEVOICE_API_KEY" \
           -H "Content-Type: application/json" \
           -d '{
@@ -270,7 +270,7 @@ Generate royalty-free sound effects from a text description. Perfect for videos,
       </Step>
       <Step title="Poll and download">
         ```bash
-        curl -X GET https://devapi.fineshare.net/v1/tasks/p1-c3d4e5f6-a7b8-9012-cdef-123456789012 \
+        curl -X GET https://apis.finevoice.ai/v1/task/p1-c3d4e5f6-a7b8-9012-cdef-123456789012 \
           -H "Authorization: Bearer $FINEVOICE_API_KEY"
 
         curl -L -o thunderstorm.mp3 "https://dlfile.fineshare.net/output/c3d4e5f6.mp3"
@@ -283,10 +283,10 @@ Generate royalty-free sound effects from a text description. Perfect for videos,
     import requests, time
     
     API_KEY = "your_api_key_here"
-    BASE_URL = "https://devapi.fineshare.net"
+    BASE_URL = "https://apis.finevoice.ai"
     HEADERS = {"Authorization": f"Bearer {API_KEY}", "Content-Type": "application/json"}
     
-    res = requests.post(f"{BASE_URL}/v1/sfx-generation", headers=HEADERS,
+    res = requests.post(f"{BASE_URL}/v1/audio/sfx-generation", headers=HEADERS,
                         json={"prompt": "Thunderstorm with heavy rain and distant thunder",
                               "negative_prompt": "music, voices",
                               "duration": 5.0,
@@ -294,7 +294,7 @@ Generate royalty-free sound effects from a text description. Perfect for videos,
     task_id = res.json()["task_id"]
     
     while True:
-        result = requests.get(f"{BASE_URL}/v1/tasks/{task_id}", headers=HEADERS).json()
+        result = requests.get(f"{BASE_URL}/v1/task/{task_id}", headers=HEADERS).json()
         if result["status"] == "completed":
             print(f"Download URL: {result['url']}")
             break
@@ -331,12 +331,12 @@ Separate vocals from background music in any audio file. Ideal for remixing, kar
     <Steps>
       <Step title="Submit the separation request">
         ```bash
-        curl -X POST https://devapi.fineshare.net/v1/separation \
+        curl -X POST https://apis.finevoice.ai/v1/audio/separation \
           -H "Authorization: Bearer $FINEVOICE_API_KEY" \
           -H "Content-Type: application/json" \
           -d '{
             "sourceUrl": "https://webresources.fineshare.net/finevoice3/audio/isolator-original.mp3",
-            "model": "default",
+            "model": "vocal-remover",
             "useAsync": true
           }'
         ```
@@ -349,7 +349,7 @@ Separate vocals from background music in any audio file. Ideal for remixing, kar
       </Step>
       <Step title="Poll and download">
         ```bash
-        curl -X GET https://devapi.fineshare.net/v1/tasks/p1-d4e5f6a7-b8c9-0123-defa-234567890123 \
+        curl -X GET https://apis.finevoice.ai/v1/task/p1-d4e5f6a7-b8c9-0123-defa-234567890123 \
           -H "Authorization: Bearer $FINEVOICE_API_KEY"
 
         curl -L -o vocals.mp3 "https://dlfile.fineshare.net/output/d4e5f6a7.mp3"
@@ -362,17 +362,17 @@ Separate vocals from background music in any audio file. Ideal for remixing, kar
     import requests, time
     
     API_KEY = "your_api_key_here"
-    BASE_URL = "https://devapi.fineshare.net"
+    BASE_URL = "https://apis.finevoice.ai"
     HEADERS = {"Authorization": f"Bearer {API_KEY}", "Content-Type": "application/json"}
     
-    res = requests.post(f"{BASE_URL}/v1/separation", headers=HEADERS,
-              json={"sourceUrl": "https://webresources.fineshare.net/finevoice3/audio/isolator-original.mp3",
-                              "model": "default",
+    res = requests.post(f"{BASE_URL}/v1/audio/separation", headers=HEADERS,
+                        json={"sourceUrl": "https://webresources.fineshare.net/finevoice3/audio/isolator-original.mp3",
+                              "model": "vocal-remover",
                               "useAsync": True})
     task_id = res.json()["task_id"]
     
     while True:
-        result = requests.get(f"{BASE_URL}/v1/tasks/{task_id}", headers=HEADERS).json()
+        result = requests.get(f"{BASE_URL}/v1/task/{task_id}", headers=HEADERS).json()
         if result["status"] == "completed":
             print(f"Download URL: {result['url']}")
             break
@@ -383,6 +383,421 @@ Separate vocals from background music in any audio file. Ideal for remixing, kar
     
     with open("vocals.mp3", "wb") as f:
         f.write(requests.get(result["url"]).content)
+    ```
+  </Tab>
+</Tabs>
+
+---
+
+## 5. Speech to Text
+
+Transcribe speech from an audio or video URL. Supports optional speaker diarization and word-level timestamps.
+
+<Tabs>
+  <Tab title="cURL">
+    <Steps>
+      <Step title="Submit the STT request">
+        ```bash
+        curl -X POST https://apis.finevoice.ai/v1/audio/stt \
+          -H "Authorization: Bearer $FINEVOICE_API_KEY" \
+          -H "Content-Type: application/json" \
+          -d '{
+            "url": "https://example.com/interview.mp3",
+            "language": "en",
+            "format": "json",
+            "speaker_diarization": true,
+            "max_speakers": 2,
+            "useAsync": true
+          }'
+        ```
+
+        **Response:**
+
+        ```json
+        { "task_id": "p1-e5f6a7b8-c9d0-1234-efab-345678901234" }
+        ```
+      </Step>
+      <Step title="Poll for result">
+        ```bash
+        curl -X GET https://apis.finevoice.ai/v1/task/p1-e5f6a7b8-c9d0-1234-efab-345678901234 \
+          -H "Authorization: Bearer $FINEVOICE_API_KEY"
+        ```
+      </Step>
+    </Steps>
+  </Tab>
+  <Tab title="Python">
+    ```python
+    import requests, time
+
+    API_KEY = "your_api_key_here"
+    BASE_URL = "https://apis.finevoice.ai"
+    HEADERS = {"Authorization": f"Bearer {API_KEY}", "Content-Type": "application/json"}
+
+    res = requests.post(f"{BASE_URL}/v1/audio/stt", headers=HEADERS,
+                        json={"url": "https://example.com/interview.mp3",
+                              "language": "en",
+                              "format": "json",
+                              "speaker_diarization": True,
+                              "max_speakers": 2,
+                              "useAsync": True})
+    task_id = res.json()["task_id"]
+
+    while True:
+        result = requests.get(f"{BASE_URL}/v1/task/{task_id}", headers=HEADERS).json()
+        if result["status"] == "completed":
+            print(f"Transcript URL: {result['url']}")
+            break
+        elif result["status"] == "failed":
+            print(f"Error: {result['error']}")
+            break
+        time.sleep(2)
+    ```
+  </Tab>
+</Tabs>
+
+---
+
+## 6. Voice Cloning
+
+Train a custom AI voice model from a short audio recording. Once trained, the voice name can be used in any TTS or Voice Conversion request.
+
+<Tabs>
+  <Tab title="cURL">
+    ```bash
+    curl -X POST https://apis.finevoice.ai/v1/voice/train \
+      -H "Authorization: Bearer $FINEVOICE_API_KEY" \
+      -H "Content-Type: application/json" \
+      -d '{
+        "name": "My Custom Voice",
+        "languageCode": "en-US",
+        "gender": "female",
+        "audioUrl": "https://example.com/my_voice_sample.wav"
+      }'
+    ```
+  </Tab>
+  <Tab title="Python">
+    ```python
+    import requests
+
+    API_KEY = "your_api_key_here"
+    BASE_URL = "https://apis.finevoice.ai"
+    HEADERS = {"Authorization": f"Bearer {API_KEY}", "Content-Type": "application/json"}
+
+    res = requests.post(f"{BASE_URL}/v1/voice/train", headers=HEADERS,
+                        json={"name": "My Custom Voice",
+                              "languageCode": "en-US",
+                              "gender": "female",
+                              "audioUrl": "https://example.com/my_voice_sample.wav"})
+    print(res.json())
+    ```
+  </Tab>
+</Tabs>
+
+<Tip>
+  For best results, use a clean 30–120 second recording with no background noise. After training completes, use the voice `name` you provided in any TTS or Voice Conversion request.
+</Tip>
+
+---
+
+## 7. Music Generation
+
+### By Prompt
+
+Generate a music track from a text description.
+
+<Tabs>
+  <Tab title="cURL">
+    ```bash
+    curl -X POST https://apis.finevoice.ai/v1/music/musicgenbyprompt \
+      -H "Authorization: Bearer $FINEVOICE_API_KEY" \
+      -H "Content-Type: application/json" \
+      -d '{
+        "prompt": "Upbeat electronic dance music with heavy bass and synth leads",
+        "instrumental": true,
+        "duration": 30
+      }'
+    ```
+  </Tab>
+  <Tab title="Python">
+    ```python
+    import requests, time
+
+    API_KEY = "your_api_key_here"
+    BASE_URL = "https://apis.finevoice.ai"
+    HEADERS = {"Authorization": f"Bearer {API_KEY}", "Content-Type": "application/json"}
+
+    res = requests.post(f"{BASE_URL}/v1/music/musicgenbyprompt", headers=HEADERS,
+                        json={"prompt": "Upbeat electronic dance music with heavy bass and synth leads",
+                              "instrumental": True,
+                              "duration": 30})
+    print(res.json())
+    ```
+  </Tab>
+</Tabs>
+
+### With Lyrics
+
+Generate a full song with vocals using your own lyrics and style description.
+
+<Tabs>
+  <Tab title="cURL">
+    ```bash
+    curl -X POST https://apis.finevoice.ai/v1/music/musicgen \
+      -H "Authorization: Bearer $FINEVOICE_API_KEY" \
+      -H "Content-Type: application/json" \
+      -d '{
+        "title": "Morning Light",
+        "style": "pop, warm, acoustic guitar",
+        "lyrics": "[Verse 1]\nWake up to the morning light\nEverything is gonna be alright",
+        "instrumental": false,
+        "modelVersion": "v3"
+      }'
+    ```
+  </Tab>
+  <Tab title="Python">
+    ```python
+    import requests
+
+    API_KEY = "your_api_key_here"
+    BASE_URL = "https://apis.finevoice.ai"
+    HEADERS = {"Authorization": f"Bearer {API_KEY}", "Content-Type": "application/json"}
+
+    res = requests.post(f"{BASE_URL}/v1/music/musicgen", headers=HEADERS,
+                        json={"title": "Morning Light",
+                              "style": "pop, warm, acoustic guitar",
+                              "lyrics": "[Verse 1]\nWake up to the morning light\nEverything is gonna be alright",
+                              "instrumental": False,
+                              "modelVersion": "v3"})
+    print(res.json())
+    ```
+  </Tab>
+</Tabs>
+
+### Music Cover
+
+Replace the vocals of an existing song with an AI voice.
+
+<Tabs>
+  <Tab title="cURL">
+    ```bash
+    curl -X POST https://apis.finevoice.ai/v1/music/cover \
+      -H "Authorization: Bearer $FINEVOICE_API_KEY" \
+      -H "Content-Type: application/json" \
+      -d '{
+        "voice": "james",
+        "sourceUrl": "https://example.com/original_song.mp3",
+        "engine": "v5",
+        "pitch": 0,
+        "outputFormat": "mp3"
+      }'
+    ```
+  </Tab>
+  <Tab title="Python">
+    ```python
+    import requests
+
+    API_KEY = "your_api_key_here"
+    BASE_URL = "https://apis.finevoice.ai"
+    HEADERS = {"Authorization": f"Bearer {API_KEY}", "Content-Type": "application/json"}
+
+    res = requests.post(f"{BASE_URL}/v1/music/cover", headers=HEADERS,
+                        json={"voice": "james",
+                              "sourceUrl": "https://example.com/original_song.mp3",
+                              "engine": "v5",
+                              "pitch": 0,
+                              "outputFormat": "mp3"})
+    print(res.json())
+    ```
+  </Tab>
+</Tabs>
+
+---
+
+## 8. Audio Enhancement
+
+### Quick Enhancement
+
+Reduce background noise from a single audio file.
+
+<Tabs>
+  <Tab title="cURL">
+    ```bash
+    curl -X POST https://apis.finevoice.ai/v1/enhancer/speech_enhancement \
+      -H "Authorization: Bearer $FINEVOICE_API_KEY" \
+      -H "Content-Type: application/json" \
+      -d '{
+        "url": "https://example.com/noisy_recording.mp3",
+        "model": "MossFormer2_SE_48K",
+        "output_format": "mp3"
+      }'
+    ```
+  </Tab>
+  <Tab title="Python">
+    ```python
+    import requests
+
+    API_KEY = "your_api_key_here"
+    BASE_URL = "https://apis.finevoice.ai"
+    HEADERS = {"Authorization": f"Bearer {API_KEY}", "Content-Type": "application/json"}
+
+    res = requests.post(f"{BASE_URL}/v1/enhancer/speech_enhancement", headers=HEADERS,
+                        json={"url": "https://example.com/noisy_recording.mp3",
+                              "model": "MossFormer2_SE_48K",
+                              "output_format": "mp3"})
+    print(res.json())
+    ```
+  </Tab>
+</Tabs>
+
+### All-in-One Pipeline
+
+Run multiple enhancement steps in a single request — noise reduction, filler word removal, silence trimming, and loudness normalization.
+
+<Tabs>
+  <Tab title="cURL">
+    ```bash
+    curl -X POST https://apis.finevoice.ai/v1/enhancer/process/pipeline \
+      -H "Authorization: Bearer $FINEVOICE_API_KEY" \
+      -H "Content-Type: application/json" \
+      -d '{
+        "url": "https://example.com/podcast_raw.mp3",
+        "step_speech_enhancement": true,
+        "step_remove_long_silences": true,
+        "step_filler_words_remove": true,
+        "step_audio_normalization": true,
+        "filler_use_whisper": true,
+        "filler_language": "en",
+        "norm_method": "peak",
+        "output_format": "mp3"
+      }'
+    ```
+  </Tab>
+  <Tab title="Python">
+    ```python
+    import requests
+
+    API_KEY = "your_api_key_here"
+    BASE_URL = "https://apis.finevoice.ai"
+    HEADERS = {"Authorization": f"Bearer {API_KEY}", "Content-Type": "application/json"}
+
+    res = requests.post(f"{BASE_URL}/v1/enhancer/process/pipeline", headers=HEADERS,
+                        json={"url": "https://example.com/podcast_raw.mp3",
+                              "step_speech_enhancement": True,
+                              "step_remove_long_silences": True,
+                              "step_filler_words_remove": True,
+                              "step_audio_normalization": True,
+                              "filler_use_whisper": True,
+                              "filler_language": "en",
+                              "norm_method": "peak",
+                              "output_format": "mp3"})
+    # Returns a download URL directly
+    print(res.json())
+    ```
+  </Tab>
+</Tabs>
+
+<Tip>
+  The Pipeline processes steps in a fixed order: Speech Enhancement → Remove Mouth Sounds → Remove Long Silences → Super Resolution → Filler Words Removal → Stuttering Removal → Audio Normalization. Enable only the steps you need.
+</Tip>
+
+---
+
+## 9. Podcast & Dubbing
+
+### Podcast Generation
+
+Generate a multi-speaker AI podcast from a prompt or script.
+
+<Tabs>
+  <Tab title="cURL">
+    ```bash
+    curl -X POST https://apis.finevoice.ai/v1/audio/podcastgen \
+      -H "Authorization: Bearer $FINEVOICE_API_KEY" \
+      -H "Content-Type: application/json" \
+      -d '{
+        "prompt": "A friendly 3-minute discussion about the future of AI voice technology",
+        "speakers": ["james", "madison"],
+        "style": "conversational",
+        "expectedDuration": "3min",
+        "useAsync": true
+      }'
+    ```
+  </Tab>
+  <Tab title="Python">
+    ```python
+    import requests, time
+
+    API_KEY = "your_api_key_here"
+    BASE_URL = "https://apis.finevoice.ai"
+    HEADERS = {"Authorization": f"Bearer {API_KEY}", "Content-Type": "application/json"}
+
+    res = requests.post(f"{BASE_URL}/v1/audio/podcastgen", headers=HEADERS,
+                        json={"prompt": "A friendly 3-minute discussion about the future of AI voice technology",
+                              "speakers": ["james", "madison"],
+                              "style": "conversational",
+                              "expectedDuration": "3min",
+                              "useAsync": True})
+    task_id = res.json()["task_id"]
+
+    while True:
+        result = requests.get(f"{BASE_URL}/v1/task/{task_id}", headers=HEADERS).json()
+        if result["status"] == "completed":
+            print(f"Download URL: {result['url']}")
+            break
+        elif result["status"] == "failed":
+            print(f"Error: {result['error']}")
+            break
+        time.sleep(3)
+    ```
+  </Tab>
+</Tabs>
+
+### Dubbing
+
+Auto-dub an audio or video file into another language while preserving the original voice.
+
+<Tabs>
+  <Tab title="cURL">
+    ```bash
+    curl -X POST https://apis.finevoice.ai/v1/audio/dubbinggen \
+      -H "Authorization: Bearer $FINEVOICE_API_KEY" \
+      -H "Content-Type: application/json" \
+      -d '{
+        "sourceUrl": "https://example.com/english_video.mp4",
+        "sourceType": "video",
+        "sourceLanguageCode": "en",
+        "targetLanguageCode": "zh",
+        "speakers": ["leo"],
+        "useAsync": true
+      }'
+    ```
+  </Tab>
+  <Tab title="Python">
+    ```python
+    import requests, time
+
+    API_KEY = "your_api_key_here"
+    BASE_URL = "https://apis.finevoice.ai"
+    HEADERS = {"Authorization": f"Bearer {API_KEY}", "Content-Type": "application/json"}
+
+    res = requests.post(f"{BASE_URL}/v1/audio/dubbinggen", headers=HEADERS,
+                        json={"sourceUrl": "https://example.com/english_video.mp4",
+                              "sourceType": "video",
+                              "sourceLanguageCode": "en",
+                              "targetLanguageCode": "zh",
+                              "speakers": ["leo"],
+                              "useAsync": True})
+    task_id = res.json()["task_id"]
+
+    while True:
+        result = requests.get(f"{BASE_URL}/v1/task/{task_id}", headers=HEADERS).json()
+        if result["status"] == "completed":
+            print(f"Download URL: {result['url']}")
+            break
+        elif result["status"] == "failed":
+            print(f"Error: {result['error']}")
+            break
+        time.sleep(3)
     ```
   </Tab>
 </Tabs>
