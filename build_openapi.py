@@ -290,7 +290,7 @@ openapi = {
                 "description": "The voice conversion request payload.",
                 "properties": {
                     "voice": {"type": "string", "description": "The target voice model name.", "example": "madison"},
-                    "sourceUrl": {"type": "string", "description": "The source audio URL.", "example": "https://example.com/input.mp3"},
+                    "sourceUrl": {"type": "string", "description": "The source audio URL.", "example": "https://dlaudio.fineshare.net/cover/speak/30f23d17-634d-420e-99e7-d24097dc669b.mp3"},
                     "outputFormat": {"type": "string", "description": "The desired output audio format. Supported: `mp3`, `wav`.", "example": "mp3"},
                     "useAsync": {"type": "boolean", "description": "Set to `true` to process asynchronously and receive a `taskId` for polling.", "example": True}
                 }

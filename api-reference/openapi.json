@@ -1301,7 +1301,7 @@
           "sourceUrl": {
             "type": "string",
             "description": "The source audio URL.",
-            "example": "https://example.com/input.mp3"
+            "example": "https://dlaudio.fineshare.net/cover/speak/30f23d17-634d-420e-99e7-d24097dc669b.mp3"
           },
           "outputFormat": {
             "type": "string",

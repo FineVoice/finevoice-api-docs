@@ -184,7 +184,7 @@ Transform the voice in an existing audio file to a different AI voice while pres
           -H "Content-Type: application/json" \
           -d '{
             "voice": "madison",
-            "sourceUrl": "https://dlaudio.fineshare.net/web/finevoice3/audio/avc-example-1.mp3",
+            "sourceUrl": "https://dlaudio.fineshare.net/cover/speak/30f23d17-634d-420e-99e7-d24097dc669b.mp3",
             "outputFormat": "mp3",
             "useAsync": true
           }'
@@ -219,7 +219,7 @@ Transform the voice in an existing audio file to a different AI voice while pres
     
     res = requests.post(f"{BASE_URL}/v1/audio/voice-conversion", headers=HEADERS,
                         json={"voice": "madison",
-                              "sourceUrl": "https://dlaudio.fineshare.net/web/finevoice3/audio/avc-example-1.mp3",
+                              "sourceUrl": "https://dlaudio.fineshare.net/cover/speak/30f23d17-634d-420e-99e7-d24097dc669b.mp3",
                               "outputFormat": "mp3",
                               "useAsync": True})
     task_id = res.json()["task_id"]
