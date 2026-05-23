@@ -82,5 +82,5 @@ Full API documentation is available at:\
 
 If you have questions or need assistance:
 
-- 📧 Email: [support@finevoice.ai](mailto:support@fineshare.ai)
+- 📧 Email: [support@finevoice.ai](mailto:support@finevoice.ai)
 - 🌐 Website: https://finevoice.ai/

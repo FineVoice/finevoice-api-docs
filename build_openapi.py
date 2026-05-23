@@ -44,7 +44,7 @@ openapi = {
     "openapi": "3.0.1",
     "info": {
         "title": "FineVoice API",
-        "description": "This is the documentation for the FineVoice API. If you have any questions or need assistance, please contact support@fineshare.ai.",
+        "description": "This is the documentation for the FineVoice API. If you have any questions or need assistance, please contact support@finevoice.ai.",
         "version": "v1"
     },
     "servers": [{"url": "https://apis.finevoice.ai", "description": "FineVoice API Gateway"}],

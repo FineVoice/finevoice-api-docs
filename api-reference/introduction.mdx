@@ -1,20 +1,117 @@
 ---
 title: "Introduction"
-description: "How to use the FineVoice API"
+description: "Everything you need to know to get started with the FineVoice API"
 ---
 
-## **Welcome**
+## Overview
 
-You can generate a new API key at [**https://finevoice.ai/usercenter**](https://finevoice.ai/usercenter).
+The FineVoice API gives you programmatic access to a full suite of AI audio capabilities — from text-to-speech and voice conversion to music generation and audio enhancement. All endpoints are served over HTTPS and return JSON responses.
 
-## **Quick Start**
+**Base URL**
 
-See our [**Quick Start**](https://api.finevoice.ai/quickstart) guide to generate audio in under 5 minutes.
+```
+https://apis.finevoice.ai
+```
 
-## [**​**](https://fvdocs.finevoice.ai/api-reference/introduction#create-a-voice-clone)**Create a Voice Clone**
+---
 
-Use our [**/trainmodel**](https://api.finevoice.ai/api-reference/endpoint/trainmodel) to create a voice clone model.
+## Authentication
 
-## [**​**](https://fvdocs.finevoice.ai/api-reference/introduction#generate-speech)**Generate Speech**
+Every request must include a valid API key as a Bearer token in the `Authorization` header.
 
-Use our [**/v1/speech-synthesis**](https://api.finevoice.ai/api-reference/endpoint/tts) to generate speech.
+```http
+Authorization: Bearer YOUR_API_KEY
+```
+
+Generate or manage your API keys at [**finevoice.ai/usercenter**](https://finevoice.ai/usercenter).
+
+<Warning>
+  Keep your API key private. Do not expose it in client-side code or public repositories.
+</Warning>
+
+---
+
+## API Categories
+
+| Category | Description |
+|----------|-------------|
+| **Text to Speech** | Convert text into natural-sounding speech with emotion tag support |
+| **Voice Conversion** | Transform the voice in an audio file to a different AI voice |
+| **Speech to Text** | Transcribe audio or video with speaker diarization and timestamps |
+| **Sound Effect Generation** | Generate royalty-free sound effects from a prompt or video |
+| **Audio Separation** | Separate vocals, instruments, and stems from audio |
+| **Podcast Generation** | Generate multi-speaker AI podcasts from a prompt or script |
+| **Task Status** | Poll the result of any asynchronous task |
+| **AI Voices** | Browse and search available voice models |
+| **Voice Design** | Design a new AI voice from a text description |
+| **AI Voice Cloning** | Train a custom voice model from a reference audio |
+| **Music Generation** | Generate full songs with vocals and instrumentation |
+| **Background Music** | Generate background music tracks from a prompt |
+| **Music Cover** | Replace vocals in a song with an AI voice |
+| **Audio Enhancement** | Denoise, normalize, remove silences, and more |
+
+---
+
+## Synchronous vs Asynchronous
+
+Some endpoints support an optional `useAsync` field. When set to `true`, the API queues the job and immediately returns a `taskId`. Poll the task status endpoint until the result is ready.
+
+```json
+{ "useAsync": true }
+```
+
+**Polling task status**
+
+```http
+GET /v1/task/{task_id}
+```
+
+A completed task returns a `url` (or `urls` for multi-output tasks) containing the download link.
+
+```json
+{
+  "status": 200,
+  "taskId": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+  "url": "https://cdn.finevoice.ai/output/result.mp3"
+}
+```
+
+Status codes returned in the response body:
+
+| `status` | Meaning |
+|----------|---------|
+| `200` | Completed — result is ready |
+| `202` | In progress — poll again |
+
+---
+
+## Request Format
+
+All POST endpoints accept `Content-Type: application/json`.
+
+```http
+POST /v1/audio/speech-synthesis
+Authorization: Bearer YOUR_API_KEY
+Content-Type: application/json
+
+{
+  "voice": "james",
+  "text": "[happy] Hello! Welcome to FineVoice."
+}
+```
+
+---
+
+## Error Responses
+
+| HTTP Status | Meaning |
+|-------------|---------|
+| `401` | Unauthorized — missing or invalid API key |
+| `422` | Validation error — check your request body fields |
+| `404` | Not found — resource or task does not exist |
+
+---
+
+## Quick Start
+
+See the [**Quick Start**](/quickstart) guide to generate your first audio output in under 5 minutes.
