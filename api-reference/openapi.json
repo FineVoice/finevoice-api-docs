@@ -25,17 +25,6 @@
         "summary": "Text to Speech",
         "description": "Convert text into natural-sounding speech using a selected AI voice model.",
         "operationId": "SpeechSynthesis",
-        "parameters": [
-          {
-            "in": "header",
-            "name": "Authorization",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Bearer token for authentication. Format: `Bearer {your_api_key}`"
-          }
-        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -74,17 +63,6 @@
         "summary": "Voice Conversion",
         "description": "Transform the voice in an audio file to a different AI voice while preserving the original content.",
         "operationId": "VoiceConversion",
-        "parameters": [
-          {
-            "in": "header",
-            "name": "Authorization",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Bearer token for authentication. Format: `Bearer {your_api_key}`"
-          }
-        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -123,17 +101,6 @@
         "summary": "Speech to Text",
         "description": "Transcribe speech from an audio or video URL into text, with optional speaker diarization and word-level timestamps.",
         "operationId": "SpeechToText",
-        "parameters": [
-          {
-            "in": "header",
-            "name": "Authorization",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Bearer token for authentication. Format: `Bearer {your_api_key}`"
-          }
-        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -172,17 +139,6 @@
         "summary": "Sound Effect Generation",
         "description": "Generate royalty-free sound effects from a text prompt or a source video/image.",
         "operationId": "SfxGeneration",
-        "parameters": [
-          {
-            "in": "header",
-            "name": "Authorization",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Bearer token for authentication. Format: `Bearer {your_api_key}`"
-          }
-        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -221,17 +177,6 @@
         "summary": "Audio Separation",
         "description": "Separate vocals, instruments, and other audio stems from an audio file using AI.",
         "operationId": "AudioSeparation",
-        "parameters": [
-          {
-            "in": "header",
-            "name": "Authorization",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Bearer token for authentication. Format: `Bearer {your_api_key}`"
-          }
-        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -270,17 +215,6 @@
         "summary": "Enhance Audio",
         "description": "Enhance audio files with AI-powered noise removal, stuttering/filler removal, loudness normalization, transcription, and more.",
         "operationId": "EnhanceAudio",
-        "parameters": [
-          {
-            "in": "header",
-            "name": "Authorization",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Bearer token for authentication. Format: `Bearer {your_api_key}`"
-          }
-        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -319,17 +253,6 @@
         "summary": "Reader Generation",
         "description": "Generate an AI-narrated audio version of a given content URL (article, web page, document, etc.).",
         "operationId": "ReaderGen",
-        "parameters": [
-          {
-            "in": "header",
-            "name": "Authorization",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Bearer token for authentication. Format: `Bearer {your_api_key}`"
-          }
-        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -368,17 +291,6 @@
         "summary": "Podcast Generation",
         "description": "Generate a multi-speaker AI podcast from a script or prompt, with selectable voice models for each speaker.",
         "operationId": "PodcastGen",
-        "parameters": [
-          {
-            "in": "header",
-            "name": "Authorization",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Bearer token for authentication. Format: `Bearer {your_api_key}`"
-          }
-        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -417,17 +329,6 @@
         "summary": "Dubbing Generation",
         "description": "Automatically dub an audio or video file into another language while preserving the original voice characteristics.",
         "operationId": "DubbingGen",
-        "parameters": [
-          {
-            "in": "header",
-            "name": "Authorization",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Bearer token for authentication. Format: `Bearer {your_api_key}`"
-          }
-        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -466,17 +367,6 @@
         "summary": "Train Voice Model",
         "description": "Create a custom AI voice model by providing a training audio URL and basic profile information.",
         "operationId": "TrainVoice",
-        "parameters": [
-          {
-            "in": "header",
-            "name": "Authorization",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Bearer token for authentication. Format: `Bearer {your_api_key}`"
-          }
-        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -515,17 +405,6 @@
         "summary": "Voice Design",
         "description": "Design a new AI voice from a text prompt and preview it with sample text.",
         "operationId": "VoiceDesign",
-        "parameters": [
-          {
-            "in": "header",
-            "name": "Authorization",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Bearer token for authentication. Format: `Bearer {your_api_key}`"
-          }
-        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -583,15 +462,6 @@
               "type": "string"
             },
             "description": "Optional design UUID to retrieve a specific voice design version."
-          },
-          {
-            "in": "header",
-            "name": "Authorization",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Bearer token for authentication. Format: `Bearer {your_api_key}`"
           }
         ],
         "responses": {
@@ -747,15 +617,6 @@
               "type": "string"
             },
             "description": "Sub-category filter."
-          },
-          {
-            "in": "header",
-            "name": "Authorization",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Bearer token for authentication. Format: `Bearer {your_api_key}`"
           }
         ],
         "responses": {
@@ -793,15 +654,6 @@
             },
             "description": "The task identifier returned by a previous API call.",
             "example": "a1b2c3d4-e5f6-7890-abcd-ef1234567890"
-          },
-          {
-            "in": "header",
-            "name": "Authorization",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Bearer token for authentication. Format: `Bearer {your_api_key}`"
           }
         ],
         "responses": {
@@ -832,17 +684,6 @@
         "summary": "Music Generation by Prompt",
         "description": "Generate a music track from a text prompt, with control over style, duration, and model version.",
         "operationId": "MusicGenByPrompt",
-        "parameters": [
-          {
-            "in": "header",
-            "name": "Authorization",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Bearer token for authentication. Format: `Bearer {your_api_key}`"
-          }
-        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -881,17 +722,6 @@
         "summary": "Music Generation",
         "description": "Generate a full music track with vocals and/or instrumentation from lyrics, style description, and reference tracks.",
         "operationId": "MusicGen",
-        "parameters": [
-          {
-            "in": "header",
-            "name": "Authorization",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Bearer token for authentication. Format: `Bearer {your_api_key}`"
-          }
-        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -930,17 +760,6 @@
         "summary": "Music Cover",
         "description": "Create an AI voice cover of a song by replacing the original vocals with a target AI voice model.",
         "operationId": "MusicCover",
-        "parameters": [
-          {
-            "in": "header",
-            "name": "Authorization",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Bearer token for authentication. Format: `Bearer {your_api_key}`"
-          }
-        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -979,17 +798,6 @@
         "summary": "Speech Enhancement",
         "description": "Reduce background noise and enhance speech quality. Supports WAV/MP3/FLAC/AAC/OGG/OPUS/M4A/WEBM. Returns enhanced audio file.",
         "operationId": "SpeechEnhancement",
-        "parameters": [
-          {
-            "in": "header",
-            "name": "Authorization",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Bearer token for authentication. Format: `Bearer {your_api_key}`"
-          }
-        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -1028,17 +836,6 @@
         "summary": "Speech Super Resolution",
         "description": "Upsample low-quality audio from 8 kHz to 48 kHz using the MossFormer2_SR_48K model. Returns high sample-rate audio file.",
         "operationId": "SpeechSuperResolution",
-        "parameters": [
-          {
-            "in": "header",
-            "name": "Authorization",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Bearer token for authentication. Format: `Bearer {your_api_key}`"
-          }
-        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -1077,17 +874,6 @@
         "summary": "Speech Separation",
         "description": "Separate two speakers from a mixed audio file using the MossFormer2_SS_16K model. Use `speaker_index` (0 or 1) to select which speaker to return.",
         "operationId": "EnhancerSpeechSeparation",
-        "parameters": [
-          {
-            "in": "header",
-            "name": "Authorization",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Bearer token for authentication. Format: `Bearer {your_api_key}`"
-          }
-        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -1126,17 +912,6 @@
         "summary": "Remove Mouth Sounds",
         "description": "Remove mouth sounds (clicks, pops, breathing) from audio using RNNoise, Hush, or Whisper-based stutter detection.",
         "operationId": "RemoveMouthSounds",
-        "parameters": [
-          {
-            "in": "header",
-            "name": "Authorization",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Bearer token for authentication. Format: `Bearer {your_api_key}`"
-          }
-        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -1175,17 +950,6 @@
         "summary": "Remove Long Silences",
         "description": "Detect and trim silence segments exceeding a threshold duration while preserving boundary silence to avoid abrupt cuts.",
         "operationId": "RemoveLongSilences",
-        "parameters": [
-          {
-            "in": "header",
-            "name": "Authorization",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Bearer token for authentication. Format: `Bearer {your_api_key}`"
-          }
-        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -1224,17 +988,6 @@
         "summary": "Filler Words Detect",
         "description": "Detect filler words (um, uh, er, hmm) in audio. Default mode uses a lightweight audio classifier (language-agnostic). Whisper mode uses ASR for precise word-level timestamps.",
         "operationId": "FillerWordsDetect",
-        "parameters": [
-          {
-            "in": "header",
-            "name": "Authorization",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Bearer token for authentication. Format: `Bearer {your_api_key}`"
-          }
-        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -1273,17 +1026,6 @@
         "summary": "Filler Words Remove",
         "description": "Detect and remove filler words from audio. Default mode uses an audio classifier; Whisper mode uses ASR to precisely locate and cut filler words.",
         "operationId": "FillerWordsRemove",
-        "parameters": [
-          {
-            "in": "header",
-            "name": "Authorization",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Bearer token for authentication. Format: `Bearer {your_api_key}`"
-          }
-        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -1322,17 +1064,6 @@
         "summary": "Stuttering Remove",
         "description": "Detect and remove stuttering segments from audio using Whisper ASR. Returns processed audio file.",
         "operationId": "StutteringRemove",
-        "parameters": [
-          {
-            "in": "header",
-            "name": "Authorization",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Bearer token for authentication. Format: `Bearer {your_api_key}`"
-          }
-        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -1371,17 +1102,6 @@
         "summary": "Audio Normalization",
         "description": "Normalize audio loudness using peak, RMS, or combined normalization methods. Returns normalized audio file.",
         "operationId": "AudioNormalization",
-        "parameters": [
-          {
-            "in": "header",
-            "name": "Authorization",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Bearer token for authentication. Format: `Bearer {your_api_key}`"
-          }
-        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -1420,17 +1140,6 @@
         "summary": "Process Pipeline",
         "description": "All-in-one audio processing pipeline. Select steps via boolean flags. Execution order: (1) Speech Enhancement, (2) Remove Mouth Sounds, (3) Remove Long Silences, (4) Super Resolution, (5) Filler Words Removal, (6) Stuttering Removal, (7) Audio Normalization. Returns a download URL.",
         "operationId": "ProcessPipeline",
-        "parameters": [
-          {
-            "in": "header",
-            "name": "Authorization",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Bearer token for authentication. Format: `Bearer {your_api_key}`"
-          }
-        ],
         "requestBody": {
           "required": true,
           "content": {
