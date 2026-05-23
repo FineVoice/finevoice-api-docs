@@ -3,6 +3,23 @@ title: "Changelog"
 description: "Stay tuned for the latest features and updates from FineVoice!"
 ---
 
+<Update label="05/23/2026">
+  Major API expansion — new Music Generation, Audio Enhancement, and additional audio processing endpoints are now available. The API reference has been fully restructured with updated endpoint paths.
+
+  - **Speech to Text**: Transcribe audio or video files with optional speaker diarization and word-level timestamps (`POST /v1/audio/stt`).
+  - **Enhance Audio**: AI-powered audio cleanup including noise removal, filler/stutter removal, normalization, and transcription (`POST /v1/audio/enhanceaudio`).
+  - **Reader Generation**: Convert articles and web pages into AI-narrated audio (`POST /v1/audio/readergen`).
+  - **Podcast Generation**: Generate multi-speaker AI podcasts from scripts or prompts (`POST /v1/audio/podcastgen`).
+  - **Dubbing**: Automatically dub audio and video into another language while preserving the original voice (`POST /v1/audio/dubbinggen`).
+  - **Voice Design**: Design a custom AI voice from a text prompt and preview it instantly (`POST /v1/voice/design`).
+  - **Music Generation**: Generate full music tracks with lyrics, style, and reference tracks — supports model versions `v3` and `r2` (`POST /v1/music/musicgen`).
+  - **Music Generation by Prompt**: Generate music from a text prompt with control over style and duration (`POST /v1/music/musicgenbyprompt`).
+  - **Music Cover**: Create AI voice covers of songs using any available voice model, with support for multi-singer configurations (`POST /v1/music/cover`).
+  - **Audio Enhancement Suite**: Nine dedicated audio enhancement endpoints — Speech Enhancement, Super Resolution (8 kHz → 48 kHz), Speaker Separation, Remove Mouth Sounds, Remove Long Silences, Filler Word Detection, Filler Word Removal, Stuttering Removal, and Audio Normalization.
+  - **Process Pipeline**: All-in-one enhancement pipeline combining any combination of the above enhancement steps in a single request (`POST /v1/enhancer/process/pipeline`).
+  - Updated all existing endpoint paths to the new versioned routes (e.g. `/v1/audio/*`, `/v1/voice/*`, `/v1/task/*`).
+</Update>
+
 <Update label="10/10/2025">
   A new update that enhances stability, adds Text to Speech character pack purchases, and improves the Blog and Guide experience.
 

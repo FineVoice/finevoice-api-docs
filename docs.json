@@ -71,6 +71,12 @@
             ]
           },
           {
+            "group": "Speech to Text",
+            "pages": [
+              "api-reference/endpoint/stt"
+            ]
+          },
+          {
             "group": "Sound Effects",
             "pages": [
               "api-reference/endpoint/sfx-generation"
@@ -80,6 +86,30 @@
             "group": "Audio Separation",
             "pages": [
               "api-reference/endpoint/separation"
+            ]
+          },
+          {
+            "group": "Enhance Audio",
+            "pages": [
+              "api-reference/endpoint/enhanceaudio"
+            ]
+          },
+          {
+            "group": "Reader Generation",
+            "pages": [
+              "api-reference/endpoint/readergen"
+            ]
+          },
+          {
+            "group": "Podcast Generation",
+            "pages": [
+              "api-reference/endpoint/podcastgen"
+            ]
+          },
+          {
+            "group": "Dubbing",
+            "pages": [
+              "api-reference/endpoint/dubbinggen"
             ]
           },
           {
@@ -96,11 +126,39 @@
             ]
           },
           {
+            "group": "Voice Design",
+            "pages": [
+              "api-reference/endpoint/voice-design"
+            ]
+          },
+          {
             "group": "AI Voice Cloning",
             "pages": [
               "api-reference/endpoint/trainmodel",
-              "api-reference/endpoint/listmodels",
-              "api-reference/endpoint/delete"
+              "api-reference/endpoint/listmodels"
+            ]
+          },
+          {
+            "group": "Music Generation",
+            "pages": [
+              "api-reference/endpoint/music-gen-by-prompt",
+              "api-reference/endpoint/music-gen",
+              "api-reference/endpoint/music-cover"
+            ]
+          },
+          {
+            "group": "Audio Enhancement",
+            "pages": [
+              "api-reference/endpoint/speech-enhancement",
+              "api-reference/endpoint/speech-super-resolution",
+              "api-reference/endpoint/enhancer-separation",
+              "api-reference/endpoint/remove-mouth-sounds",
+              "api-reference/endpoint/remove-long-silences",
+              "api-reference/endpoint/filler-words-detect",
+              "api-reference/endpoint/filler-words-remove",
+              "api-reference/endpoint/stuttering-remove",
+              "api-reference/endpoint/audio-normalization",
+              "api-reference/endpoint/enhancer-pipeline"
             ]
           }
         ]
