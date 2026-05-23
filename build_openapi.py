@@ -319,8 +319,8 @@ openapi = {
                 "properties": {
                     "prompt": {"type": "string", "description": "The prompt describing the desired sound effect.", "example": "Thunderstorm with heavy rain and distant thunder"},
                     "negative_prompt": {"type": "string", "description": "The negative prompt describing sounds to avoid.", "example": "music, voices"},
-                    "sourceUrl": {"type": "string", "description": "Source video or image URL for generating contextual sound effects."},
-                    "sourceType": {"type": "string", "description": "The source media type. Supported: `image`, `video`, `audio`.", "example": "video"},
+                    "sourceUrl": {"type": "string", "description": "Source video or image URL for generating contextual sound effects. If provided, `sourceType` is required."},
+                    "sourceType": {"type": "string", "description": "The source media type. Supported: `image`, `video`. Required when `sourceUrl` is provided.", "example": "video"},
                     "duration": {"type": "number", "format": "float", "description": "Requested output duration in seconds. Maximum is 30 seconds.", "example": 5.0},
                     "useAsync": {"type": "boolean", "description": "Set to `true` to process asynchronously.", "example": True}
                 }

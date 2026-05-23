@@ -1296,7 +1296,7 @@
           "voice": {
             "type": "string",
             "description": "The target voice model name.",
-            "example": "madison"
+            "example": "leo"
           },
           "sourceUrl": {
             "type": "string",
@@ -1395,11 +1395,11 @@
           },
           "sourceUrl": {
             "type": "string",
-            "description": "Source video or image URL for generating contextual sound effects."
+            "description": "Source video or image URL for generating contextual sound effects. If provided, `sourceType` is required."
           },
           "sourceType": {
             "type": "string",
-            "description": "The source media type. Supported: `image`, `video`, `audio`.",
+            "description": "The source media type. Supported: `image`, `video`. Required when `sourceUrl` is provided.",
             "example": "video"
           },
           "duration": {
