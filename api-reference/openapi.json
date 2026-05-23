@@ -567,8 +567,8 @@
         "tags": [
           "Music"
         ],
-        "summary": "Background Music Generation",
-        "description": "Generate a royalty-free background music track from a text prompt, with control over style, duration, and model version.",
+        "summary": "Music Generation by Prompt",
+        "description": "Generate a royalty-free music track from a text prompt, with control over style, duration, and model version.",
         "operationId": "MusicGenByPrompt",
         "requestBody": {
           "required": true,
