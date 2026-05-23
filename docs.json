@@ -89,12 +89,6 @@
             ]
           },
           {
-            "group": "Enhance Audio",
-            "pages": [
-              "api-reference/endpoint/enhanceaudio"
-            ]
-          },
-          {
             "group": "Reader Generation",
             "pages": [
               "api-reference/endpoint/readergen"
