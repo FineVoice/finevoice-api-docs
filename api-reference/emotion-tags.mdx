@@ -7,7 +7,7 @@ FineVoice TTS voices are powered by **Fish.audio**. You can embed emotion tags d
 
 ## Usage
 
-Wrap a tag name in square brackets and insert it at any point in your `text` field:
+Wrap a tag name in square brackets and insert it in your `text` field. Each tag applies to the text that follows it until the next tag (or end of string).
 
 ```json
 {
@@ -16,11 +16,63 @@ Wrap a tag name in square brackets and insert it at any point in your `text` fie
 }
 ```
 
-Multiple tags can appear in a single string — each tag applies to the text that follows it until the next tag.
-
 <Note>
   Tag names are **case-insensitive**. `[Happy]`, `[HAPPY]`, and `[happy]` are all equivalent.
 </Note>
+
+---
+
+## Best Practices
+
+Follow these guidelines to get the most natural-sounding output:
+
+**1. Place tags at the start of a sentence**
+
+Tags work best when placed at the beginning of a sentence or a natural pause point, not mid-sentence or mid-word.
+
+```json
+// Good
+"text": "[excited] We just launched a new feature!"
+
+// Avoid
+"text": "We just [excited] launched a new feature!"
+```
+
+**2. Match the tag to the content**
+
+Choose a tag that reflects the actual meaning of the sentence. Mismatched emotion and content will produce awkward or unnatural output.
+
+```json
+// Good — tone matches context
+"text": "[grateful] Thank you so much for your support."
+
+// Avoid — tone contradicts content
+"text": "[angry] Thank you so much for your support."
+```
+
+**3. Do not stack multiple tags consecutively**
+
+Placing two or more tags back-to-back without any text between them is not supported and may cause unexpected behavior. Use one tag per sentence or paragraph.
+
+```json
+// Good
+"text": "[calm] Please follow the instructions carefully."
+
+// Avoid
+"text": "[calm][confident] Please follow the instructions carefully."
+```
+
+**4. Use one tag per logical segment**
+
+A single tag should cover one sentence or one short paragraph. Avoid switching tags too frequently — this can make the speech sound unnatural.
+
+```json
+// Good
+"text": "[excited] We are thrilled to announce our new product! [calm] Here is everything you need to know."
+
+// Avoid — too many switches
+"text": "[excited] We are [calm] thrilled [happy] to announce [confident] our new product!"
+```
 
 ---
 
