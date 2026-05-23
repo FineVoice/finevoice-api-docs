@@ -1340,13 +1340,8 @@
           },
           "engine": {
             "type": "string",
-            "description": "The transcription engine to use.",
+            "description": "The transcription engine to use. Supported: `whisper`, `funasr`.",
             "example": "whisper"
-          },
-          "duration": {
-            "type": "integer",
-            "format": "int32",
-            "description": "The source audio duration in seconds."
           },
           "useAsync": {
             "type": "boolean",
