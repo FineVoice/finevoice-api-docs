@@ -56,7 +56,8 @@
             "group": "API documentation",
             "pages": [
               "api-reference/introduction",
-              "api-reference/podcast-speakers"
+              "api-reference/podcast-speakers",
+              "api-reference/emotion-tags"
             ]
           },
           {
