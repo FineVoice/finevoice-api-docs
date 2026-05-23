@@ -329,7 +329,7 @@ openapi = {
                 "type": "object",
                 "description": "The audio separation request payload.",
                 "properties": {
-                    "sourceUrl": {"type": "string", "description": "The source audio URL.", "example": "https://example.com/song.mp3"},
+                    "sourceUrl": {"type": "string", "description": "The source audio URL.", "example": "https://webresources.fineshare.net/finevoice3/audio/isolator-original.mp3"},
                     "model": {"type": "string", "description": "The separation model. Supported: `vocal-remover`, `htdemucs_6s-4`, `reverb`.", "example": "vocal-remover"},
                     "useAsync": {"type": "boolean", "description": "Set to `true` to process asynchronously.", "example": True}
                 }

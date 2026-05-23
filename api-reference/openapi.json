@@ -1422,7 +1422,7 @@
           "sourceUrl": {
             "type": "string",
             "description": "The source audio URL.",
-            "example": "https://example.com/song.mp3"
+            "example": "https://webresources.fineshare.net/finevoice3/audio/isolator-original.mp3"
           },
           "model": {
             "type": "string",
