@@ -245,44 +245,6 @@
         }
       }
     },
-    "/v1/audio/dubbinggen": {
-      "post": {
-        "tags": [
-          "Audio"
-        ],
-        "summary": "Dubbing Generation",
-        "description": "Automatically dub an audio or video file into another language while preserving the original voice characteristics.",
-        "operationId": "DubbingGen",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/DubbingGenerationRequest"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Task accepted. Returns a taskId for async polling or the result URL directly.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/AudioTaskResponse"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized — invalid or missing API key."
-          },
-          "422": {
-            "description": "Validation error — check request body fields."
-          }
-        }
-      }
-    },
     "/v1/voice/train": {
       "post": {
         "tags": [
@@ -605,8 +567,8 @@
         "tags": [
           "Music"
         ],
-        "summary": "Music Generation by Prompt",
-        "description": "Generate a music track from a text prompt, with control over style, duration, and model version.",
+        "summary": "Background Music Generation",
+        "description": "Generate a royalty-free background music track from a text prompt, with control over style, duration, and model version.",
         "operationId": "MusicGenByPrompt",
         "requestBody": {
           "required": true,
@@ -1380,8 +1342,8 @@
             },
             "description": "Voice models used by podcast speakers.",
             "example": [
-              "james",
-              "madison"
+              "olivia",
+              "ethan"
             ]
           },
           "expectedDuration": {
@@ -1401,64 +1363,6 @@
           "originalText": {
             "type": "boolean",
             "description": "Whether to keep the original text wording."
-          },
-          "useAsync": {
-            "type": "boolean",
-            "description": "Set to `true` to process asynchronously.",
-            "example": true
-          }
-        }
-      },
-      "DubbingGenerationRequest": {
-        "type": "object",
-        "description": "The dubbing generation request payload.",
-        "properties": {
-          "title": {
-            "type": "string",
-            "description": "The task title."
-          },
-          "sourceUrl": {
-            "type": "string",
-            "description": "The source media URL.",
-            "example": "https://example.com/video.mp4"
-          },
-          "sourceType": {
-            "type": "string",
-            "description": "Source media type. Use `simple` for translation-only, or `audio`/`video` for full dubbing.",
-            "example": "video"
-          },
-          "thumbnail": {
-            "type": "string",
-            "description": "The thumbnail image URL."
-          },
-          "sourceLanguageCode": {
-            "type": "string",
-            "description": "The source language code.",
-            "example": "en"
-          },
-          "targetLanguageCode": {
-            "type": "string",
-            "description": "The target language code.",
-            "example": "zh"
-          },
-          "speakers": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "description": "Target speaker voice models. When `sourceType` is `simple`, pass `[female]` or `[male]`. When `audio`/`video`, pass specific voice names like `[leo]`.",
-            "example": [
-              "leo"
-            ]
-          },
-          "expectedDuration": {
-            "type": "string",
-            "description": "The expected generated duration."
-          },
-          "duration": {
-            "type": "number",
-            "format": "double",
-            "description": "Source duration in seconds."
           },
           "useAsync": {
             "type": "boolean",

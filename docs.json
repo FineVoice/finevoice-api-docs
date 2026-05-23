@@ -96,12 +96,6 @@
             ]
           },
           {
-            "group": "Dubbing",
-            "pages": [
-              "api-reference/endpoint/dubbinggen"
-            ]
-          },
-          {
             "group": "Task Status",
             "pages": [
               "api-reference/endpoint/task-status"

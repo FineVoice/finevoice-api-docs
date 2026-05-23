@@ -702,7 +702,7 @@ Run multiple enhancement steps in a single request — noise reduction, filler w
 
 ---
 
-## 9. Podcast & Dubbing
+## 9. Podcast Generation
 
 ### Podcast Generation
 
@@ -736,56 +736,6 @@ Generate a multi-speaker AI podcast from a prompt or script.
                               "speakers": ["james", "madison"],
                               "style": "conversational",
                               "expectedDuration": "3min",
-                              "useAsync": True})
-    task_id = res.json()["task_id"]
-
-    while True:
-        result = requests.get(f"{BASE_URL}/v1/task/{task_id}", headers=HEADERS).json()
-        if result["status"] == "completed":
-            print(f"Download URL: {result['url']}")
-            break
-        elif result["status"] == "failed":
-            print(f"Error: {result['error']}")
-            break
-        time.sleep(3)
-    ```
-  </Tab>
-</Tabs>
-
-### Dubbing
-
-Auto-dub an audio or video file into another language while preserving the original voice.
-
-<Tabs>
-  <Tab title="cURL">
-    ```bash
-    curl -X POST https://apis.finevoice.ai/v1/audio/dubbinggen \
-      -H "Authorization: Bearer $FINEVOICE_API_KEY" \
-      -H "Content-Type: application/json" \
-      -d '{
-        "sourceUrl": "https://example.com/english_video.mp4",
-        "sourceType": "video",
-        "sourceLanguageCode": "en",
-        "targetLanguageCode": "zh",
-        "speakers": ["leo"],
-        "useAsync": true
-      }'
-    ```
-  </Tab>
-  <Tab title="Python">
-    ```python
-    import requests, time
-
-    API_KEY = "your_api_key_here"
-    BASE_URL = "https://apis.finevoice.ai"
-    HEADERS = {"Authorization": f"Bearer {API_KEY}", "Content-Type": "application/json"}
-
-    res = requests.post(f"{BASE_URL}/v1/audio/dubbinggen", headers=HEADERS,
-                        json={"sourceUrl": "https://example.com/english_video.mp4",
-                              "sourceType": "video",
-                              "sourceLanguageCode": "en",
-                              "targetLanguageCode": "zh",
-                              "speakers": ["leo"],
                               "useAsync": True})
     task_id = res.json()["task_id"]
 
