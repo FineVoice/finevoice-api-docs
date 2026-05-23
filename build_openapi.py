@@ -290,7 +290,7 @@ openapi = {
                 "description": "The voice conversion request payload.",
                 "properties": {
                     "voice": {"type": "string", "description": "The target voice model name.", "example": "madison"},
-                    "sourceUrl": {"type": "string", "description": "The source audio URL.", "example": "https://example.com/input.mp3"},
+                    "sourceUrl": {"type": "string", "description": "The source audio URL.", "example": "https://dlaudio.fineshare.net/cover/speak/30f23d17-634d-420e-99e7-d24097dc669b.mp3"},
                     "outputFormat": {"type": "string", "description": "The desired output audio format. Supported: `mp3`, `wav`.", "example": "mp3"},
                     "useAsync": {"type": "boolean", "description": "Set to `true` to process asynchronously and receive a `taskId` for polling.", "example": True}
                 }
@@ -303,8 +303,7 @@ openapi = {
                     "language": {"type": "string", "description": "The source language code (e.g. `en`, `zh`, `ja`).", "example": "en"},
                     "title": {"type": "string", "description": "An optional task title for reference."},
                     "format": {"type": "string", "description": "Expected transcript output format: `srt`, `vtt`, `json`, `txt`.", "example": "json"},
-                    "engine": {"type": "string", "description": "The transcription engine to use.", "example": "whisper"},
-                    "duration": {"type": "integer", "format": "int32", "description": "The source audio duration in seconds."},
+                    "engine": {"type": "string", "description": "The transcription engine to use. Supported: `whisper`, `funasr`.", "example": "whisper"},
                     "useAsync": {"type": "boolean", "description": "Set to `true` to process asynchronously.", "example": True},
                     "word_level_timestamp_alignment": {"type": "boolean", "description": "Whether to include word-level timestamp alignment.", "example": False},
                     "speaker_diarization": {"type": "boolean", "description": "Whether to enable speaker diarization (identify multiple speakers).", "example": False},
@@ -320,8 +319,8 @@ openapi = {
                 "properties": {
                     "prompt": {"type": "string", "description": "The prompt describing the desired sound effect.", "example": "Thunderstorm with heavy rain and distant thunder"},
                     "negative_prompt": {"type": "string", "description": "The negative prompt describing sounds to avoid.", "example": "music, voices"},
-                    "sourceUrl": {"type": "string", "description": "Source video or image URL for generating contextual sound effects."},
-                    "sourceType": {"type": "string", "description": "The source media type. Supported: `image`, `video`, `audio`.", "example": "video"},
+                    "sourceUrl": {"type": "string", "description": "Source video or image URL for generating contextual sound effects. If provided, `sourceType` is required."},
+                    "sourceType": {"type": "string", "description": "The source media type. Supported: `image`, `video`. Required when `sourceUrl` is provided.", "example": "video"},
                     "duration": {"type": "number", "format": "float", "description": "Requested output duration in seconds. Maximum is 30 seconds.", "example": 5.0},
                     "useAsync": {"type": "boolean", "description": "Set to `true` to process asynchronously.", "example": True}
                 }
@@ -330,7 +329,7 @@ openapi = {
                 "type": "object",
                 "description": "The audio separation request payload.",
                 "properties": {
-                    "sourceUrl": {"type": "string", "description": "The source audio URL.", "example": "https://example.com/song.mp3"},
+                    "sourceUrl": {"type": "string", "description": "The source audio URL.", "example": "https://webresources.fineshare.net/finevoice3/audio/isolator-original.mp3"},
                     "model": {"type": "string", "description": "The separation model. Supported: `vocal-remover`, `htdemucs_6s-4`, `reverb`.", "example": "vocal-remover"},
                     "useAsync": {"type": "boolean", "description": "Set to `true` to process asynchronously.", "example": True}
                 }

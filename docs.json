@@ -55,7 +55,8 @@
           {
             "group": "API documentation",
             "pages": [
-              "api-reference/introduction"
+              "api-reference/introduction",
+              "api-reference/podcast-speakers"
             ]
           },
           {
@@ -86,18 +87,6 @@
             "group": "Audio Separation",
             "pages": [
               "api-reference/endpoint/separation"
-            ]
-          },
-          {
-            "group": "Enhance Audio",
-            "pages": [
-              "api-reference/endpoint/enhanceaudio"
-            ]
-          },
-          {
-            "group": "Reader Generation",
-            "pages": [
-              "api-reference/endpoint/readergen"
             ]
           },
           {

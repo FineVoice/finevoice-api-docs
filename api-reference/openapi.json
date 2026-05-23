@@ -207,82 +207,6 @@
         }
       }
     },
-    "/v1/audio/enhanceaudio": {
-      "post": {
-        "tags": [
-          "Audio"
-        ],
-        "summary": "Enhance Audio",
-        "description": "Enhance audio files with AI-powered noise removal, stuttering/filler removal, loudness normalization, transcription, and more.",
-        "operationId": "EnhanceAudio",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/EnhanceAudioRequest"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Task accepted. Returns a taskId for async polling or the result URL directly.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/AudioTaskResponse"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized — invalid or missing API key."
-          },
-          "422": {
-            "description": "Validation error — check request body fields."
-          }
-        }
-      }
-    },
-    "/v1/audio/readergen": {
-      "post": {
-        "tags": [
-          "Audio"
-        ],
-        "summary": "Reader Generation",
-        "description": "Generate an AI-narrated audio version of a given content URL (article, web page, document, etc.).",
-        "operationId": "ReaderGen",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ReaderGenerationRequest"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Task accepted. Returns a taskId for async polling or the result URL directly.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/AudioTaskResponse"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized — invalid or missing API key."
-          },
-          "422": {
-            "description": "Validation error — check request body fields."
-          }
-        }
-      }
-    },
     "/v1/audio/podcastgen": {
       "post": {
         "tags": [
@@ -1296,12 +1220,12 @@
           "voice": {
             "type": "string",
             "description": "The target voice model name.",
-            "example": "madison"
+            "example": "leo"
           },
           "sourceUrl": {
             "type": "string",
             "description": "The source audio URL.",
-            "example": "https://example.com/input.mp3"
+            "example": "https://dlaudio.fineshare.net/cover/speak/30f23d17-634d-420e-99e7-d24097dc669b.mp3"
           },
           "outputFormat": {
             "type": "string",
@@ -1340,13 +1264,8 @@
           },
           "engine": {
             "type": "string",
-            "description": "The transcription engine to use.",
+            "description": "The transcription engine to use. Supported: `whisper`, `funasr`.",
             "example": "whisper"
-          },
-          "duration": {
-            "type": "integer",
-            "format": "int32",
-            "description": "The source audio duration in seconds."
           },
           "useAsync": {
             "type": "boolean",
@@ -1400,11 +1319,11 @@
           },
           "sourceUrl": {
             "type": "string",
-            "description": "Source video or image URL for generating contextual sound effects."
+            "description": "Source video or image URL for generating contextual sound effects. If provided, `sourceType` is required."
           },
           "sourceType": {
             "type": "string",
-            "description": "The source media type. Supported: `image`, `video`, `audio`.",
+            "description": "The source media type. Supported: `image`, `video`. Required when `sourceUrl` is provided.",
             "example": "video"
           },
           "duration": {
@@ -1427,175 +1346,12 @@
           "sourceUrl": {
             "type": "string",
             "description": "The source audio URL.",
-            "example": "https://example.com/song.mp3"
+            "example": "https://webresources.fineshare.net/finevoice3/audio/isolator-original.mp3"
           },
           "model": {
             "type": "string",
             "description": "The separation model. Supported: `vocal-remover`, `htdemucs_6s-4`, `reverb`.",
             "example": "vocal-remover"
-          },
-          "useAsync": {
-            "type": "boolean",
-            "description": "Set to `true` to process asynchronously.",
-            "example": true
-          }
-        }
-      },
-      "EnhanceAudioRequest": {
-        "type": "object",
-        "description": "The audio enhancement request payload.",
-        "properties": {
-          "files": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "description": "List of source file URLs to enhance.",
-            "example": [
-              "https://example.com/recording.mp3"
-            ]
-          },
-          "title": {
-            "type": "string",
-            "description": "The task title."
-          },
-          "video": {
-            "type": "boolean",
-            "description": "Whether the input contains video."
-          },
-          "stutters": {
-            "type": "boolean",
-            "description": "Whether to remove stutters."
-          },
-          "fillers": {
-            "type": "boolean",
-            "description": "Whether to remove filler words."
-          },
-          "hesitations": {
-            "type": "boolean",
-            "description": "Whether to remove hesitations."
-          },
-          "muted": {
-            "type": "boolean",
-            "description": "Whether to remove muted sections."
-          },
-          "breath": {
-            "type": "boolean",
-            "description": "Whether to reduce breathing sounds."
-          },
-          "normalize": {
-            "type": "boolean",
-            "description": "Whether to normalize loudness."
-          },
-          "autoeq": {
-            "type": "boolean",
-            "description": "Whether to apply automatic equalization."
-          },
-          "transcription": {
-            "type": "boolean",
-            "description": "Whether to generate a transcription."
-          },
-          "summarize": {
-            "type": "boolean",
-            "description": "Whether to generate a summary."
-          },
-          "merge": {
-            "type": "boolean",
-            "description": "Whether to merge multiple files into one output."
-          },
-          "totalDurationSecends": {
-            "type": "integer",
-            "format": "int32",
-            "description": "Total source duration in seconds."
-          },
-          "useAsync": {
-            "type": "boolean",
-            "description": "Set to `true` to process asynchronously.",
-            "example": true
-          },
-          "send_email": {
-            "type": "boolean",
-            "description": "Whether to send the result by email."
-          },
-          "long_silences": {
-            "type": "boolean",
-            "description": "Whether to remove long silences."
-          },
-          "mouth_sounds": {
-            "type": "boolean",
-            "description": "Whether to remove mouth sounds."
-          },
-          "remove_noise": {
-            "type": "boolean",
-            "description": "Whether to remove background noise."
-          },
-          "keep_music": {
-            "type": "boolean",
-            "description": "Whether to preserve background music."
-          },
-          "sound_studio": {
-            "type": "boolean",
-            "description": "Whether to apply sound studio processing."
-          },
-          "mute_lufs": {
-            "type": "integer",
-            "format": "int32",
-            "description": "Loudness threshold for muting, in LUFS."
-          },
-          "target_lufs": {
-            "type": "integer",
-            "format": "int32",
-            "description": "Target output loudness, in LUFS."
-          },
-          "export_format": {
-            "type": "string",
-            "description": "The exported file format.",
-            "example": "mp3"
-          },
-          "social_content": {
-            "type": "boolean",
-            "description": "Whether to generate social media content."
-          },
-          "export_timestamps": {
-            "type": "boolean",
-            "description": "Whether to export timestamps."
-          },
-          "signed_url": {
-            "type": "string",
-            "description": "The signed URL used by the upstream service."
-          }
-        }
-      },
-      "ReaderGenerationRequest": {
-        "type": "object",
-        "description": "The reader generation request payload.",
-        "properties": {
-          "title": {
-            "type": "string",
-            "description": "The task title."
-          },
-          "sourceUrl": {
-            "type": "string",
-            "description": "Source content URL (article, web page, document, etc.).",
-            "example": "https://example.com/article"
-          },
-          "sourceType": {
-            "type": "string",
-            "description": "The source content type.",
-            "example": "article"
-          },
-          "thumbnail": {
-            "type": "string",
-            "description": "The thumbnail image URL."
-          },
-          "voice": {
-            "type": "string",
-            "description": "The narration voice model name.",
-            "example": "james"
-          },
-          "engine": {
-            "type": "string",
-            "description": "The reader generation engine."
           },
           "useAsync": {
             "type": "boolean",
