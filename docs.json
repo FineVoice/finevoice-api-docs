@@ -89,12 +89,6 @@
             ]
           },
           {
-            "group": "Reader Generation",
-            "pages": [
-              "api-reference/endpoint/readergen"
-            ]
-          },
-          {
             "group": "Podcast Generation",
             "pages": [
               "api-reference/endpoint/podcastgen"

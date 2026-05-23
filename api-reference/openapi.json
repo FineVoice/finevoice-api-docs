@@ -207,44 +207,6 @@
         }
       }
     },
-    "/v1/audio/readergen": {
-      "post": {
-        "tags": [
-          "Audio"
-        ],
-        "summary": "Reader Generation",
-        "description": "Generate an AI-narrated audio version of a given content URL (article, web page, document, etc.).",
-        "operationId": "ReaderGen",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ReaderGenerationRequest"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Task accepted. Returns a taskId for async polling or the result URL directly.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/AudioTaskResponse"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized — invalid or missing API key."
-          },
-          "422": {
-            "description": "Validation error — check request body fields."
-          }
-        }
-      }
-    },
     "/v1/audio/podcastgen": {
       "post": {
         "tags": [
@@ -1390,44 +1352,6 @@
             "type": "string",
             "description": "The separation model. Supported: `vocal-remover`, `htdemucs_6s-4`, `reverb`.",
             "example": "vocal-remover"
-          },
-          "useAsync": {
-            "type": "boolean",
-            "description": "Set to `true` to process asynchronously.",
-            "example": true
-          }
-        }
-      },
-      "ReaderGenerationRequest": {
-        "type": "object",
-        "description": "The reader generation request payload.",
-        "properties": {
-          "title": {
-            "type": "string",
-            "description": "The task title."
-          },
-          "sourceUrl": {
-            "type": "string",
-            "description": "Source content URL (article, web page, document, etc.).",
-            "example": "https://example.com/article"
-          },
-          "sourceType": {
-            "type": "string",
-            "description": "The source content type.",
-            "example": "article"
-          },
-          "thumbnail": {
-            "type": "string",
-            "description": "The thumbnail image URL."
-          },
-          "voice": {
-            "type": "string",
-            "description": "The narration voice model name.",
-            "example": "james"
-          },
-          "engine": {
-            "type": "string",
-            "description": "The reader generation engine."
           },
           "useAsync": {
             "type": "boolean",
