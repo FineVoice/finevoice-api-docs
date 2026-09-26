@@ -61,6 +61,12 @@
             ]
           },
           {
+            "group": "MCP",
+            "pages": [
+              "api-reference/mcp"
+            ]
+          },
+          {
             "group": "Text to Speech",
             "pages": [
               "api-reference/endpoint/tts"
