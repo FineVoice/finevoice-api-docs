@@ -1,0 +1,176 @@
+---
+title: "MCP Server"
+description: "通过 Model Context Protocol (MCP) 让 AI 客户端直接调用 FineVoice 的语音、音乐与音频处理能力"
+---
+
+## Overview
+
+FineVoice 提供了一个 [Model Context Protocol (MCP)](https://modelcontextprotocol.io) Server,允许 Claude Desktop、Cursor、VS Code 等支持 MCP 的 AI 客户端直接调用 FineVoice API,无需额外编写集成代码。
+
+MCP Server 暴露的能力与 [REST API](/api-reference/introduction) 基本一致,包括语音合成、变声、语音识别、播客生成、音效生成、人声分离、音色管理、语音克隆、音乐生成与音频增强等。
+
+**Endpoint**
+
+```
+https://mcp.finevoice.ai/v1/mcp
+```
+
+**Transport**:Streamable HTTP
+
+---
+
+## Authentication
+
+MCP Server 使用与 REST API 相同的鉴权方式,通过 `Authorization` 请求头传递 Bearer Token:
+
+```http
+Authorization: Bearer YOUR_API_KEY
+```
+
+在配置 MCP 客户端时,需要将该 header 加入对应的 `headers` 字段(见下方客户端配置示例)。
+
+<Warning>
+  请妥善保管你的 API Key,不要将其提交到公共代码仓库或暴露在客户端配置文件中的明文位置。
+</Warning>
+
+---
+
+## Client Configuration
+
+<Tabs>
+  <Tab title="Claude Desktop">
+    在 `claude_desktop_config.json` 中添加:
+
+    ```json
+    {
+      "mcpServers": {
+        "finevoice": {
+          "url": "https://mcp.finevoice.ai/v1/mcp",
+          "headers": {
+            "Authorization": "Bearer YOUR_API_KEY"
+          }
+        }
+      }
+    }
+    ```
+  </Tab>
+  <Tab title="Cursor">
+    在项目根目录的 `.cursor/mcp.json` 中添加:
+
+    ```json
+    {
+      "mcpServers": {
+        "finevoice": {
+          "url": "https://mcp.finevoice.ai/v1/mcp",
+          "headers": {
+            "Authorization": "Bearer YOUR_API_KEY"
+          }
+        }
+      }
+    }
+    ```
+  </Tab>
+  <Tab title="VS Code">
+    在 `.vscode/mcp.json` 中添加:
+
+    ```json
+    {
+      "servers": {
+        "finevoice": {
+          "type": "http",
+          "url": "https://mcp.finevoice.ai/v1/mcp",
+          "headers": {
+            "Authorization": "Bearer YOUR_API_KEY"
+          }
+        }
+      }
+    }
+    ```
+  </Tab>
+</Tabs>
+
+配置完成后重启客户端,即可在对话中直接要求 AI 调用 FineVoice 的工具(例如“帮我用 james 这个音色把这段文字转成语音”)。
+
+---
+
+## Available Tools
+
+MCP Server 上的每个工具对应一个 FineVoice REST API 端点,参数与返回结构保持一致。异步任务同样通过任务轮询工具查询结果。
+
+### 语音合成 / 播客
+
+| 工具 | 对应端点 | 说明 |
+|------|----------|------|
+| Text to Speech | `POST /v1/audio/speech-synthesis` | 文本转语音,详见 [TTS](/api-reference/endpoint/tts) |
+| Podcast Script Generation | `POST /v1/audio/podcastgen/{task_id}/script` | 生成播客脚本,详见 [Podcast Generation](/api-reference/endpoint/podcastgen) |
+| Script to Speech | `POST /v1/audio/script-tts` | 将脚本转换为多角色语音 |
+
+### 语音识别
+
+| 工具 | 对应端点 | 说明 |
+|------|----------|------|
+| Speech to Text | `POST /v1/audio/stt` | 语音转文字与字幕生成,详见 [STT](/api-reference/endpoint/stt) |
+
+### 音效与人声分离
+
+| 工具 | 对应端点 | 说明 |
+|------|----------|------|
+| Sound Effect Generation | `POST /v1/audio/sfx-generation` | 音效生成,详见 [Sound Effects](/api-reference/endpoint/sfx-generation) |
+| Audio Separation | `POST /v1/audio/separation` | 人声/伴奏分离,详见 [Audio Separation](/api-reference/endpoint/separation) |
+
+### 音色 / 语音克隆
+
+| 工具 | 对应端点 | 说明 |
+|------|----------|------|
+| List Voices | `GET /v1/voice/pagevoices` | 分页获取音色列表,详见 [Get Voices](/api-reference/endpoint/pagevoices) |
+| Get Voice Detail | `GET /v1/voice/{voice}` | 获取单个音色详情,详见 [Get Voice Detail](/api-reference/endpoint/getvoicedetail) |
+| Train Voice Model | `POST /v1/voice/train` | 声音克隆训练,详见 [Train Model](/api-reference/endpoint/trainmodel) |
+| Design Voice | `POST /v1/voice/design` | 根据文字描述设计新音色,详见 [Voice Design](/api-reference/endpoint/voice-design) |
+| Get Model Status | `GET /v1/models/{name}` | 查询模型训练状态,详见 [List Models](/api-reference/endpoint/listmodels) |
+| Voice Conversion | `POST /v1/audio/voice-conversion` | 变声,详见 [Voice Conversion](/api-reference/endpoint/voice-conversion) |
+
+### 音乐生成
+
+| 工具 | 对应端点 | 说明 |
+|------|----------|------|
+| Music Generation | `POST /v1/music/musicgen` | 音乐生成,详见 [Music Generation](/api-reference/endpoint/music-gen) |
+| Music Generation by Prompt | `POST /v1/music/musicgenbyprompt` | 按提示词生成音乐,详见 [Music Generation by Prompt](/api-reference/endpoint/music-gen-by-prompt) |
+| Music Generation by Structured Prompt | `POST /v1/music/musicgenbystructuredprompt` | 按结构化提示词生成音乐 |
+| Get Lyrics | `GET /v1/music/{music_id}/lyrics` | 获取生成歌曲的歌词 |
+| List Artists | `GET /v1/music/artists` | 获取可用音乐人风格列表 |
+| Music Cover | `POST /v1/music/cover` | 翻唱 / 曲风转换,详见 [Music Cover](/api-reference/endpoint/music-cover) |
+
+### 音频增强
+
+| 工具 | 对应端点 | 说明 |
+|------|----------|------|
+| Speech Enhancement | `POST /v1/enhancer/speech_enhancement` | 语音降噪增强,详见 [Speech Enhancement](/api-reference/endpoint/speech-enhancement) |
+| Speech Super Resolution | `POST /v1/enhancer/speech_super_resolution` | 语音超分辨率,详见 [Speech Super Resolution](/api-reference/endpoint/speech-super-resolution) |
+| Remove Mouth Sounds | `POST /v1/enhancer/remove_mouth_sounds` | 去除口腔杂音,详见 [Remove Mouth Sounds](/api-reference/endpoint/remove-mouth-sounds) |
+| Remove Long Silences | `POST /v1/enhancer/remove_long_silences` | 去除长静音,详见 [Remove Long Silences](/api-reference/endpoint/remove-long-silences) |
+| Detect Filler Words | `POST /v1/enhancer/filler_words/detect` | 检测口头禅,详见 [Filler Words Detect](/api-reference/endpoint/filler-words-detect) |
+| Remove Filler Words | `POST /v1/enhancer/filler_words/remove` | 去除口头禅,详见 [Filler Words Remove](/api-reference/endpoint/filler-words-remove) |
+| Remove Stuttering | `POST /v1/enhancer/stuttering/remove` | 去除口吃重复,详见 [Stuttering Remove](/api-reference/endpoint/stuttering-remove) |
+| Audio Normalization | `POST /v1/enhancer/normalization` | 音量归一化,详见 [Audio Normalization](/api-reference/endpoint/audio-normalization) |
+| Enhancer Pipeline | `POST /v1/enhancer/pipeline` | 组合多个增强步骤,详见 [Enhancer Pipeline](/api-reference/endpoint/enhancer-pipeline) |
+| Enhancer Separation | `POST /v1/enhancer/speech_separation` | 增强模块内的人声分离,详见 [Enhancer Separation](/api-reference/endpoint/enhancer-separation) |
+
+### 打分与其他
+
+| 工具 | 对应端点 | 说明 |
+|------|----------|------|
+| CLAP Score | `POST /clap-feign-service/v1/clap/score` | 对音频与文本描述的匹配度打分 |
+| CLAP Health Check | `GET /clap-feign-service/v1/clap/health` | 打分服务健康检查 |
+
+### 任务轮询
+
+| 工具 | 对应端点 | 说明 |
+|------|----------|------|
+| Get Task Status | `GET /v1/task/{task_id}` | 查询异步任务结果,详见 [Task Status](/api-reference/endpoint/task-status) |
+
+---
+
+## Notes
+
+- MCP 工具调用与 REST API 共享同一个账号的配额与计费,详见 [API Pricing](/essentials/api-pricing)。
+- 异步任务(如音乐生成、语音克隆训练)通过 MCP 提交后,需要使用 **Get Task Status** 工具轮询结果。
