@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /mintlify-assets/
+Disallow: /_next/
+
+Sitemap: https://api.finevoice.ai/sitemap.xml
