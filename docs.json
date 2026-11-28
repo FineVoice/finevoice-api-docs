@@ -132,19 +132,15 @@
             "group": "Music Generation",
             "pages": [
               "api-reference/endpoint/music-gen-by-prompt",
-              "api-reference/endpoint/music-gen",
-              "api-reference/endpoint/music-cover"
+              "api-reference/endpoint/music-gen"
             ]
           },
           {
             "group": "Audio Enhancement",
             "pages": [
               "api-reference/endpoint/speech-enhancement",
-              "api-reference/endpoint/speech-super-resolution",
-              "api-reference/endpoint/enhancer-separation",
               "api-reference/endpoint/remove-mouth-sounds",
               "api-reference/endpoint/remove-long-silences",
-              "api-reference/endpoint/filler-words-detect",
               "api-reference/endpoint/filler-words-remove",
               "api-reference/endpoint/stuttering-remove",
               "api-reference/endpoint/audio-normalization",

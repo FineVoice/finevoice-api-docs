@@ -175,26 +175,11 @@ openapi = {
             "Generate a full music track with vocals and/or instrumentation from lyrics, style description, and reference tracks.",
             "MusicGen", "MusicGenerationRequest", "Task accepted."
         ),
-        "/v1/music/cover": make_post_obj(
-            "Music", "Music Cover",
-            "Create an AI voice cover of a song by replacing the original vocals with a target AI voice model.",
-            "MusicCover", "MusicCoverRequest", "Task accepted."
-        ),
         # ── Enhancer Service ──────────────────────────────────────────────────
         "/v1/enhancer/speech_enhancement": make_post_obj(
             "Audio Enhancer", "Speech Enhancement",
             "Reduce background noise and enhance speech quality. Supports WAV/MP3/FLAC/AAC/OGG/OPUS/M4A/WEBM. Returns enhanced audio file.",
             "SpeechEnhancement", "SpeechEnhancementRequest", "Enhanced audio returned."
-        ),
-        "/v1/enhancer/speech_super_resolution": make_post_obj(
-            "Audio Enhancer", "Speech Super Resolution",
-            "Upsample low-quality audio from 8 kHz to 48 kHz using the MossFormer2_SR_48K model. Returns high sample-rate audio file.",
-            "SpeechSuperResolution", "SpeechSuperResolutionRequest", "High sample-rate audio returned."
-        ),
-        "/v1/enhancer/speech_separation": make_post_obj(
-            "Audio Enhancer", "Speech Separation",
-            "Separate two speakers from a mixed audio file using the MossFormer2_SS_16K model. Use `speaker_index` (0 or 1) to select which speaker to return.",
-            "EnhancerSpeechSeparation", "SpeechSeparationRequest", "Separated speaker audio returned."
         ),
         "/v1/enhancer/remove_mouth_sounds": make_post_obj(
             "Audio Enhancer", "Remove Mouth Sounds",
@@ -205,11 +190,6 @@ openapi = {
             "Audio Enhancer", "Remove Long Silences",
             "Detect and trim silence segments exceeding a threshold duration while preserving boundary silence to avoid abrupt cuts.",
             "RemoveLongSilences", "RemoveLongSilencesRequest", "Processed audio returned."
-        ),
-        "/v1/enhancer/filler_words/detect": make_post_obj(
-            "Audio Enhancer", "Filler Words Detect",
-            "Detect filler words (um, uh, er, hmm) in audio. Default mode uses a lightweight audio classifier (language-agnostic). Whisper mode uses ASR for precise word-level timestamps.",
-            "FillerWordsDetect", "FillerWordsRequest", "Filler word timestamps returned."
         ),
         "/v1/enhancer/filler_words/remove": make_post_obj(
             "Audio Enhancer", "Filler Words Remove",
@@ -253,7 +233,7 @@ openapi = {
                 "type": "object",
                 "description": "Standard response for audio processing tasks.",
                 "properties": {
-                    "status": {"type": "integer", "format": "int32", "description": "HTTP-style status code (200 for success, 202 for in-progress)."},
+                    "status": {"type": "integer", "format": "int32", "description": "Task status: `success` or `3` = completed, `failed` or >= 4 = failed, anything else = in progress."},
                     "url": {"type": "string", "description": "Download URL of the generated audio file (available when completed)."},
                     "taskId": {"type": "string", "description": "Task identifier for async polling. Use with GET /v1/task/{task_id}.", "example": "a1b2c3d4-e5f6-7890-abcd-ef1234567890"},
                     "error": {"$ref": "#/components/schemas/ApiError"},
@@ -267,7 +247,7 @@ openapi = {
                 "type": "object",
                 "description": "Response for task status polling.",
                 "properties": {
-                    "status": {"type": "integer", "format": "int32", "description": "HTTP-style status code (200 for completed, 202 for in-progress)."},
+                    "status": {"type": "integer", "format": "int32", "description": "Task status: `success` or `3` = completed, `failed` or >= 4 = failed, anything else = in progress. May be absent while a new task is being saved; keep polling."},
                     "url": {"type": "string", "description": "Download URL of the result.", "example": "https://cdn.finevoice.ai/output/result.mp3"},
                     "taskId": {"type": "string", "description": "Task identifier.", "example": "a1b2c3d4-e5f6-7890-abcd-ef1234567890"},
                     "error": {"$ref": "#/components/schemas/ApiError"},
@@ -463,38 +443,6 @@ openapi = {
                     "modelVersion": {"type": "string", "description": "Model version. `v3`: optimized for Chinese vocals and traditional styles. `r2`: studio recording quality with highly realistic vocals.", "example": "v3", "enum": ["v3", "r2"]}
                 }
             },
-            "MusicCoverRequest": {
-                "type": "object",
-                "description": "The music cover request payload.",
-                "properties": {
-                    "voice": {"type": "string", "description": "The primary target voice model name.", "example": "james"},
-                    "pitch": {"type": "number", "format": "float", "minimum": -12, "maximum": 12, "description": "Vocal pitch offset in semitones.", "example": 0, "default": 0},
-                    "outputFormat": {"type": "string", "description": "The desired output format.", "example": "mp3"},
-                    "audioName": {"type": "string", "description": "The output audio name."},
-                    "audioCover": {"type": "string", "description": "The cover image URL."},
-                    "way": {"type": "string", "description": "Processing mode. Must be `m2`.", "example": "m2"},
-                    "cut": {"type": "integer", "format": "int32", "description": "The cut mode."},
-                    "engine": {"type": "string", "description": "Voice conversion engine. `v5`: great for singing (rich vibrato, more noise). `v7`: great for speech (clean, stable).", "example": "v5", "enum": ["v5", "v7"]},
-                    "sourceUrl": {"type": "string", "description": "The source audio URL.", "example": "https://example.com/song.mp3"},
-                    "singers": {"type": "array", "items": {"$ref": "#/components/schemas/MusicCoverSingerRequest"}, "description": "Singer configurations for a multi-singer cover."},
-                    "instrument_pitch": {"type": "number", "format": "float", "description": "Instrumental pitch offset in semitones."},
-                    "pitch_control": {"type": "string", "description": "Pitch control mode. Must be `rmvpe`.", "example": "rmvpe"},
-                    "diffusion_steps": {"type": "integer", "format": "int32", "description": "Number of diffusion steps."},
-                    "auto_f0_adjust": {"type": "boolean", "description": "Whether to enable automatic F0 adjustment."},
-                    "vocal_types": {"type": "string", "description": "Vocal type configuration.", "example": "solo", "default": "solo", "enum": ["solo", "chorus", "duets"]}
-                }
-            },
-            "MusicCoverSingerRequest": {
-                "type": "object",
-                "description": "A singer configuration for a multi-singer music cover task.",
-                "properties": {
-                    "voice": {"type": "string", "description": "The singer voice model name.", "example": "james"},
-                    "pitch": {"type": "number", "format": "float", "description": "Pitch offset for this singer in semitones."},
-                    "engine": {"type": "string", "description": "Voice conversion engine. `v5`: great for singing. `v7`: great for speech.", "example": "v5", "enum": ["v5", "v7"]},
-                    "diffusion_steps": {"type": "integer", "format": "int32", "description": "Number of diffusion steps."},
-                    "auto_f0_adjust": {"type": "boolean", "description": "Whether to enable automatic F0 adjustment."}
-                }
-            },
             "SpeechEnhancementRequest": {
                 "type": "object",
                 "description": "The speech enhancement request payload.",
@@ -506,23 +454,6 @@ openapi = {
                     "normalization_method": {"type": "string", "description": "Normalization method: `peak`, `rms`, or `both`.", "default": "peak"},
                     "normalization_peak_db": {"type": "number", "description": "Target peak level in dBFS.", "default": -1.0},
                     "normalization_rms_db": {"type": "number", "description": "Target RMS level in dBFS.", "default": -20.0},
-                    "output_format": {"type": "string", "description": "Output format: `wav`, `mp3`, `flac`, or `m4a`.", "default": "wav"}
-                }
-            },
-            "SpeechSuperResolutionRequest": {
-                "type": "object",
-                "description": "The speech super resolution request payload.",
-                "properties": {
-                    "url": {"type": "string", "description": "Low sample-rate audio URL (http/https).", "example": "https://example.com/low_quality.mp3"},
-                    "output_format": {"type": "string", "description": "Output format: `wav`, `mp3`, `flac`, or `m4a`.", "default": "wav"}
-                }
-            },
-            "SpeechSeparationRequest": {
-                "type": "object",
-                "description": "The speech separation request payload.",
-                "properties": {
-                    "url": {"type": "string", "description": "Mixed-speech audio URL (http/https).", "example": "https://example.com/mixed_speakers.mp3"},
-                    "speaker_index": {"type": "integer", "minimum": 0, "maximum": 1, "description": "Which speaker to return: `0` or `1`.", "default": 0},
                     "output_format": {"type": "string", "description": "Output format: `wav`, `mp3`, `flac`, or `m4a`.", "default": "wav"}
                 }
             },

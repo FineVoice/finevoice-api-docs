@@ -47,7 +47,6 @@ Generate or manage your API keys at [**finevoice.ai/usercenter**](https://finevo
 | **AI Voice Cloning** | Train a custom voice model from a reference audio |
 | **Music Generation** | Generate full songs with vocals and instrumentation |
 | **Background Music** | Generate background music tracks from a prompt |
-| **Music Cover** | Replace vocals in a song with an AI voice |
 | **Audio Enhancement** | Denoise, normalize, remove silences, and more |
 
 ---
@@ -66,22 +65,45 @@ Some endpoints support an optional `useAsync` field. When set to `true`, the API
 GET /v1/task/{task_id}
 ```
 
-A completed task returns a `url` (or `urls` for multi-output tasks) containing the download link.
+A completed task returns `urls` containing the download links.
 
 ```json
 {
-  "status": 200,
+  "status": "success",
   "taskId": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
-  "url": "https://cdn.finevoice.ai/output/result.mp3"
+  "urls": ["https://cdn.finevoice.ai/output/result.mp3"]
 }
 ```
 
-Status codes returned in the response body:
+Fields returned in the response body:
 
-| `status` | Meaning |
-|----------|---------|
-| `200` | Completed — result is ready |
-| `202` | In progress — poll again |
+| Field | Meaning |
+|-------|---------|
+| `status` | `success` or `3` — completed, result is ready. `failed` or any number `>= 4` — the task failed. Any other value (`waiting`, `running`, `1`, `2`, or missing) — still in progress, poll again |
+| `urls` | Download links for the output files |
+| `error` | Error details (`code` and `message`) |
+
+<Note>
+  The status is not an HTTP-style code: `200` means nothing here, and `3` / `success` is the only success value. Do not wait for `200`.
+</Note>
+
+**Polling recommendations**
+
+- Wait 1–2 seconds after submitting, then poll every 5 seconds. Set a total timeout of about 10 minutes; music tasks take longer than other tasks.
+- A task that was just submitted may briefly return `error.code: "failed"` (`Failed to query task status`) with `urls: []` and **no** `status` field. This is not a final failure — keep polling.
+- A gateway error (`status >= 500` with a `/proxy/` path and no `taskId`) is also transient; keep polling.
+- Treat the task as failed only when `status` is `failed` or `>= 4`.
+
+**Audio Enhancer endpoints**
+
+The `/v1/enhancer/*` endpoints process the file synchronously and do not return a `taskId`. The response contains the download link directly, in `download_url` instead of `urls`:
+
+```json
+{
+  "download_url": "https://xdl.fineshare.net/enhancer/a6ed53bb69594111ab32fa40536382b8.mp3",
+  "filename": "a6ed53bb69594111ab32fa40536382b8.mp3"
+}
+```
 
 ---
 
@@ -109,6 +131,19 @@ Content-Type: application/json
 | `401` | Unauthorized — missing or invalid API key |
 | `422` | Validation error — check your request body fields |
 | `404` | Not found — resource or task does not exist |
+
+<Warning>
+  Some validation errors are returned with HTTP `200`. Always check the response body for an `error` object before reading `urls`:
+
+  ```json
+  {
+    "error": { "code": "0005", "message": "TotalDurationSecends is invalid." },
+    "urls": []
+  }
+  ```
+
+  A request succeeded only if there is no `error` with a `code` or `message`.
+</Warning>
 
 ---
 

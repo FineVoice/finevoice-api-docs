@@ -138,22 +138,18 @@ Each tool on the MCP Server maps to a FineVoice REST API endpoint, with the same
 | Music Generation by Structured Prompt | `POST /v1/music/musicgenbystructuredprompt` | Generate music from a structured prompt |
 | Get Lyrics | `GET /v1/music/{music_id}/lyrics` | Retrieve lyrics for a generated song |
 | List Artists | `GET /v1/music/artists` | List available artist styles |
-| Music Cover | `POST /v1/music/cover` | Re-sing a track with a different voice or style — see [Music Cover](/api-reference/endpoint/music-cover) |
 
 ### Audio Enhancement
 
 | Tool | Endpoint | Description |
 |------|----------|-------------|
 | Speech Enhancement | `POST /v1/enhancer/speech_enhancement` | Denoise and enhance speech — see [Speech Enhancement](/api-reference/endpoint/speech-enhancement) |
-| Speech Super Resolution | `POST /v1/enhancer/speech_super_resolution` | Upsample speech audio quality — see [Speech Super Resolution](/api-reference/endpoint/speech-super-resolution) |
 | Remove Mouth Sounds | `POST /v1/enhancer/remove_mouth_sounds` | Remove mouth noises — see [Remove Mouth Sounds](/api-reference/endpoint/remove-mouth-sounds) |
 | Remove Long Silences | `POST /v1/enhancer/remove_long_silences` | Trim long silences — see [Remove Long Silences](/api-reference/endpoint/remove-long-silences) |
-| Detect Filler Words | `POST /v1/enhancer/filler_words/detect` | Detect filler words — see [Filler Words Detect](/api-reference/endpoint/filler-words-detect) |
 | Remove Filler Words | `POST /v1/enhancer/filler_words/remove` | Remove filler words — see [Filler Words Remove](/api-reference/endpoint/filler-words-remove) |
 | Remove Stuttering | `POST /v1/enhancer/stuttering/remove` | Remove stuttered repetitions — see [Stuttering Remove](/api-reference/endpoint/stuttering-remove) |
 | Audio Normalization | `POST /v1/enhancer/normalization` | Normalize audio volume — see [Audio Normalization](/api-reference/endpoint/audio-normalization) |
 | Enhancer Pipeline | `POST /v1/enhancer/pipeline` | Chain multiple enhancement steps — see [Enhancer Pipeline](/api-reference/endpoint/enhancer-pipeline) |
-| Enhancer Separation | `POST /v1/enhancer/speech_separation` | Voice separation within the enhancer module — see [Enhancer Separation](/api-reference/endpoint/enhancer-separation) |
 
 ### Scoring & Other
 
