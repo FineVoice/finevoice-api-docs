@@ -3,7 +3,7 @@
 Official documentation, OpenAPI spec, and SDKs for the **FineVoice API**: AI text-to-speech, voice cloning, voice conversion, speech-to-text, music and sound-effect generation, and audio enhancement behind one REST API.
 
 - 📖 Documentation: https://api.finevoice.ai/
-- 🌐 API Base URL: `https://apis.finevoice.ai`
+- 🌐 API Base URL: `https://api.finevoice.ai`
 - 🎧 Try it online: [FineVoice AI Voice Generator](https://finevoice.ai/)
 
 ## 🚀 Features
