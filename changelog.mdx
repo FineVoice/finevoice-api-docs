@@ -3,6 +3,17 @@ title: "Changelog"
 description: "Stay tuned for the latest features and updates from FineVoice!"
 ---
 
+<Update label="11/28/2026">
+  Official Python and C# SDKs are now available, and the API reference has been corrected to match the live API behavior.
+
+  - **Python SDK**: Install with `pip install finevoice` ([PyPI](https://pypi.org/project/finevoice/)). Wraps authentication, every endpoint, and task polling.
+  - **C# SDK**: Install with `dotnet add package FineVoice` ([NuGet](https://www.nuget.org/packages/FineVoice)). Targets .NET 6+.
+  - **Task polling**: Documented the real task status values. `success` (or `3`) means done, `failed` or a numeric status of `4` and above means failure, and any other value means keep polling. HTTP 200 is not a task status.
+  - **Response formats**: Documented the Music Generation submit response (`taskId`, then poll for the audio URLs) and the Audio Enhancer response (`download_url`, `filename`).
+  - **Validation errors**: Some validation errors are returned as HTTP 200 with an `error` object (`code`, `message`). The API reference now includes a warning about this.
+  - **Removed pages**: Super Resolution, Speaker Separation (enhancer), Filler Word Detection, and Music Cover are no longer listed because these endpoints are not currently available.
+</Update>
+
 <Update label="05/23/2026">
   Major API expansion — new Music Generation, Audio Enhancement, and additional audio processing endpoints are now available. The API reference has been fully restructured with updated endpoint paths.
 
