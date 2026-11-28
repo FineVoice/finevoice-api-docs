@@ -5,7 +5,7 @@ description: "Generate your first AI voice with FineVoice in minutes"
 
 ## Overview
 
-This guide walks you through the complete FineVoice API workflow: from getting your API key to generating speech, converting voices, creating sound effects, and separating audio tracks. All audio processing tasks follow the same async pattern — submit a request, get a `task_id`, then poll for the result.
+This guide walks you through the complete FineVoice API workflow: from getting your API key to generating speech, converting voices, creating sound effects, and separating audio tracks. All audio processing tasks follow the same async pattern — submit a request, get a `taskId`, then poll for the result.
 
 ## Get your API Key
 
@@ -47,30 +47,29 @@ All audio processing endpoints work the same way:
 
 <Steps>
   <Step title="Submit the request">
-    Send a POST request with your audio task parameters. The API immediately returns a `task_id`.
+    Send a POST request with your audio task parameters. The API returns a `taskId`. Fast tasks such as Text to Speech may already include the finished result (`status` of `success` and `urls`) in this response.
 
     ```json
-    { "task_id": "p1-a1b2c3d4-e5f6-7890-abcd-ef1234567890" }
+    { "taskId": "a1b2c3d4-e5f6-7890-abcd-ef1234567890" }
     ```
   </Step>
   <Step title="Poll for the result">
-    Use `GET /v1/task/{task_id}` to check status. Poll every 2–3 seconds until `status` is `completed`.
+    Use `GET /v1/task/{taskId}` to check status. Poll every 2–3 seconds until `status` is `success`.
 
     ```json
     {
-      "task_id": "p1-a1b2c3d4-e5f6-7890-abcd-ef1234567890",
-      "status": "completed",
-      "url": "https://dlfile.fineshare.net/audio/a1b2c3d4.mp3",
-      "error": null
+      "status": "success",
+      "taskId": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+      "urls": ["https://dlfile.fineshare.net/api-tts/a1b2c3d4-e5f6-7890-abcd-ef1234567890.mp3"],
+      "taskType": "audio.tts"
     }
     ```
 
-    | Status | Meaning |
+    | Field | Meaning |
     | --- | --- |
-    | `pending` | Task queued, not yet started |
-    | `processing` | Task is being processed |
-    | `completed` | Task finished — `url` contains the download link |
-    | `failed` | Task failed — `error` contains the reason |
+    | `status` | `success` when the task is finished. Any other value means it is still in progress |
+    | `urls` | Download links for the output files (one or more) |
+    | `error` | Present only when the task fails — contains a `code` and `message` |
   </Step>
   <Step title="Download the output">
     ```bash
@@ -78,6 +77,64 @@ All audio processing endpoints work the same way:
     ```
   </Step>
 </Steps>
+
+---
+
+## Use an SDK
+
+Official SDKs are available for Python and C#. Each one wraps authentication, every endpoint, and task polling, so the submit-then-poll flow above becomes a single call to `wait_for_task`.
+
+| Language | Package | Requirements |
+| --- | --- | --- |
+| Python | `finevoice` | Python 3.8+ |
+| C# | `FineVoice` | .NET 6+ |
+
+The Python SDK is published on [PyPI](https://pypi.org/project/finevoice/) and the C# SDK on [NuGet](https://www.nuget.org/packages/FineVoice).
+
+<Tabs>
+  <Tab title="Python">
+    ```bash
+    pip install finevoice
+    ```
+
+    ```python
+    import os
+    from finevoice import FineVoice
+
+    client = FineVoice(os.environ["FINEVOICE_API_KEY"])
+
+    task = client.speech_synthesis({"voice": "james", "text": "[happy] Hello from FineVoice!"})
+    result = client.wait_for_task(task)  # polls GET /v1/task/{id}
+    print(result["urls"])
+    ```
+  </Tab>
+  <Tab title="C#">
+    ```bash
+    dotnet add package FineVoice
+    ```
+
+    ```csharp
+    using FineVoice;
+
+    using var client = new FineVoiceClient(Environment.GetEnvironmentVariable("FINEVOICE_API_KEY")!);
+
+    var task = await client.SpeechSynthesisAsync(new { voice = "james", text = "[happy] Hello from FineVoice!" });
+    var result = await client.WaitForTaskAsync(FineVoiceClient.GetTaskId(task)!); // polls GET /v1/task/{id}
+    Console.WriteLine(result["urls"]);
+    ```
+  </Tab>
+</Tabs>
+
+All SDKs share the same conventions:
+
+- Request bodies use the API field names (for example `sourceUrl`, `useAsync`), exactly as shown in the [API reference](/api-reference/introduction).
+- Task polling accepts either a `taskId` or the original submit response, and raises an error if the task fails or times out (default 10 minutes).
+- List endpoints take optional filters, for example `page_voices(language="en-US", page=0, limit=20)`.
+- Errors expose the HTTP status code and response body (`FineVoiceError`, `FineVoiceException`).
+
+<Note>
+  Responses use the `taskId` field, and a finished task has `status` of `success` with the output links in `urls`. The SDKs also accept the legacy `task_id` / `completed` forms. The `/v1/enhancer/*` endpoints are synchronous and return `download_url` directly, and some validation errors come back with HTTP `200` and an `error` object in the body.
+</Note>
 
 ---
 
@@ -102,7 +159,7 @@ Convert text into natural-sounding speech. Supports 1,500\+ AI voices and emotio
         **Response:**
 
         ```json
-        { "task_id": "p1-a1b2c3d4-e5f6-7890-abcd-ef1234567890" }
+        { "taskId": "p1-a1b2c3d4-e5f6-7890-abcd-ef1234567890" }
         ```
       </Step>
       <Step title="Poll for result">
@@ -115,10 +172,9 @@ Convert text into natural-sounding speech. Supports 1,500\+ AI voices and emotio
 
         ```json
         {
-          "task_id": "p1-a1b2c3d4-e5f6-7890-abcd-ef1234567890",
-          "status": "completed",
-          "url": "https://dlfile.fineshare.net/output/a1b2c3d4.mp3",
-          "error": null
+          "status": "success",
+          "taskId": "p1-a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+          "urls": ["https://dlfile.fineshare.net/output/a1b2c3d4.mp3"]
         }
         ```
       </Step>
@@ -141,24 +197,24 @@ Convert text into natural-sounding speech. Supports 1,500\+ AI voices and emotio
     res = requests.post(f"{BASE_URL}/v1/audio/speech-synthesis", headers=HEADERS,
                         json={"voice": "james",
                               "text": "[happy] Hi, welcome to FineVoice! [breathe] Let me show you what I can do."})
-    task_id = res.json()["task_id"]
+    task_id = res.json()["taskId"]
     print(f"Task submitted: {task_id}")
     
     # 2. Poll for result
     while True:
         result = requests.get(f"{BASE_URL}/v1/task/{task_id}", headers=HEADERS).json()
         print(f"Status: {result['status']}")
-        if result["status"] == "completed":
-            print(f"Download URL: {result['url']}")
+        if result["status"] == "success":
+            print(f"Download URL: {result['urls'][0]}")
             break
-        elif result["status"] == "failed":
+        elif result.get("error"):
             print(f"Error: {result['error']}")
             break
         time.sleep(2)
     
     # 3. Download
     with open("tts_output.mp3", "wb") as f:
-        f.write(requests.get(result["url"]).content)
+        f.write(requests.get(result["urls"][0]).content)
     print("Saved to tts_output.mp3")
     ```
   </Tab>
@@ -193,7 +249,7 @@ Transform the voice in an existing audio file to a different AI voice while pres
         **Response:**
 
         ```json
-        { "task_id": "p1-b2c3d4e5-f6a7-8901-bcde-f12345678901" }
+        { "taskId": "p1-b2c3d4e5-f6a7-8901-bcde-f12345678901" }
         ```
       </Step>
       <Step title="Poll for result">
@@ -222,20 +278,20 @@ Transform the voice in an existing audio file to a different AI voice while pres
                               "sourceUrl": "https://dlaudio.fineshare.net/cover/speak/30f23d17-634d-420e-99e7-d24097dc669b.mp3",
                               "outputFormat": "mp3",
                               "useAsync": True})
-    task_id = res.json()["task_id"]
+    task_id = res.json()["taskId"]
     
     while True:
         result = requests.get(f"{BASE_URL}/v1/task/{task_id}", headers=HEADERS).json()
-        if result["status"] == "completed":
-            print(f"Download URL: {result['url']}")
+        if result["status"] == "success":
+            print(f"Download URL: {result['urls'][0]}")
             break
-        elif result["status"] == "failed":
+        elif result.get("error"):
             print(f"Error: {result['error']}")
             break
         time.sleep(2)
     
     with open("converted.mp3", "wb") as f:
-        f.write(requests.get(result["url"]).content)
+        f.write(requests.get(result["urls"][0]).content)
     ```
   </Tab>
 </Tabs>
@@ -265,7 +321,7 @@ Generate royalty-free sound effects from a text description. Perfect for videos,
         **Response:**
 
         ```json
-        { "task_id": "p1-c3d4e5f6-a7b8-9012-cdef-123456789012" }
+        { "taskId": "p1-c3d4e5f6-a7b8-9012-cdef-123456789012" }
         ```
       </Step>
       <Step title="Poll and download">
@@ -291,20 +347,20 @@ Generate royalty-free sound effects from a text description. Perfect for videos,
                               "negative_prompt": "music, voices",
                               "duration": 5.0,
                               "useAsync": True})
-    task_id = res.json()["task_id"]
+    task_id = res.json()["taskId"]
     
     while True:
         result = requests.get(f"{BASE_URL}/v1/task/{task_id}", headers=HEADERS).json()
-        if result["status"] == "completed":
-            print(f"Download URL: {result['url']}")
+        if result["status"] == "success":
+            print(f"Download URL: {result['urls'][0]}")
             break
-        elif result["status"] == "failed":
+        elif result.get("error"):
             print(f"Error: {result['error']}")
             break
         time.sleep(2)
     
     with open("thunderstorm.mp3", "wb") as f:
-        f.write(requests.get(result["url"]).content)
+        f.write(requests.get(result["urls"][0]).content)
     ```
   </Tab>
 </Tabs>
@@ -344,7 +400,7 @@ Separate vocals from background music in any audio file. Ideal for remixing, kar
         **Response:**
 
         ```json
-        { "task_id": "p1-d4e5f6a7-b8c9-0123-defa-234567890123" }
+        { "taskId": "p1-d4e5f6a7-b8c9-0123-defa-234567890123" }
         ```
       </Step>
       <Step title="Poll and download">
@@ -369,20 +425,20 @@ Separate vocals from background music in any audio file. Ideal for remixing, kar
                         json={"sourceUrl": "https://webresources.fineshare.net/finevoice3/audio/isolator-original.mp3",
                               "model": "vocal-remover",
                               "useAsync": True})
-    task_id = res.json()["task_id"]
+    task_id = res.json()["taskId"]
     
     while True:
         result = requests.get(f"{BASE_URL}/v1/task/{task_id}", headers=HEADERS).json()
-        if result["status"] == "completed":
-            print(f"Download URL: {result['url']}")
+        if result["status"] == "success":
+            print(f"Download URL: {result['urls'][0]}")
             break
-        elif result["status"] == "failed":
+        elif result.get("error"):
             print(f"Error: {result['error']}")
             break
         time.sleep(2)
     
     with open("vocals.mp3", "wb") as f:
-        f.write(requests.get(result["url"]).content)
+        f.write(requests.get(result["urls"][0]).content)
     ```
   </Tab>
 </Tabs>
@@ -414,7 +470,7 @@ Transcribe speech from an audio or video URL. Supports optional speaker diarizat
         **Response:**
 
         ```json
-        { "task_id": "p1-e5f6a7b8-c9d0-1234-efab-345678901234" }
+        { "taskId": "p1-e5f6a7b8-c9d0-1234-efab-345678901234" }
         ```
       </Step>
       <Step title="Poll for result">
@@ -440,14 +496,14 @@ Transcribe speech from an audio or video URL. Supports optional speaker diarizat
                               "speaker_diarization": True,
                               "max_speakers": 2,
                               "useAsync": True})
-    task_id = res.json()["task_id"]
+    task_id = res.json()["taskId"]
 
     while True:
         result = requests.get(f"{BASE_URL}/v1/task/{task_id}", headers=HEADERS).json()
-        if result["status"] == "completed":
-            print(f"Transcript URL: {result['url']}")
+        if result["status"] == "success":
+            print(f"Transcript URL: {result['urls'][0]}")
             break
-        elif result["status"] == "failed":
+        elif result.get("error"):
             print(f"Error: {result['error']}")
             break
         time.sleep(2)
@@ -568,44 +624,6 @@ Generate a full song with vocals using your own lyrics and style description.
                               "lyrics": "[Verse 1]\nWake up to the morning light\nEverything is gonna be alright",
                               "instrumental": False,
                               "modelVersion": "v3"})
-    print(res.json())
-    ```
-  </Tab>
-</Tabs>
-
-### Music Cover
-
-Replace the vocals of an existing song with an AI voice.
-
-<Tabs>
-  <Tab title="cURL">
-    ```bash
-    curl -X POST https://apis.finevoice.ai/v1/music/cover \
-      -H "Authorization: Bearer $FINEVOICE_API_KEY" \
-      -H "Content-Type: application/json" \
-      -d '{
-        "voice": "james",
-        "sourceUrl": "https://example.com/original_song.mp3",
-        "engine": "v5",
-        "pitch": 0,
-        "outputFormat": "mp3"
-      }'
-    ```
-  </Tab>
-  <Tab title="Python">
-    ```python
-    import requests
-
-    API_KEY = "your_api_key_here"
-    BASE_URL = "https://apis.finevoice.ai"
-    HEADERS = {"Authorization": f"Bearer {API_KEY}", "Content-Type": "application/json"}
-
-    res = requests.post(f"{BASE_URL}/v1/music/cover", headers=HEADERS,
-                        json={"voice": "james",
-                              "sourceUrl": "https://example.com/original_song.mp3",
-                              "engine": "v5",
-                              "pitch": 0,
-                              "outputFormat": "mp3"})
     print(res.json())
     ```
   </Tab>
@@ -737,14 +755,14 @@ Generate a multi-speaker AI podcast from a prompt or script.
                               "style": "conversational",
                               "expectedDuration": "3min",
                               "useAsync": True})
-    task_id = res.json()["task_id"]
+    task_id = res.json()["taskId"]
 
     while True:
         result = requests.get(f"{BASE_URL}/v1/task/{task_id}", headers=HEADERS).json()
-        if result["status"] == "completed":
-            print(f"Download URL: {result['url']}")
+        if result["status"] == "success":
+            print(f"Download URL: {result['urls'][0]}")
             break
-        elif result["status"] == "failed":
+        elif result.get("error"):
             print(f"Error: {result['error']}")
             break
         time.sleep(3)

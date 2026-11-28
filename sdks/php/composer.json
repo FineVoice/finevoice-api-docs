@@ -1,0 +1,14 @@
+{
+  "name": "finevoice/finevoice-php",
+  "description": "PHP SDK for the FineVoice API",
+  "type": "library",
+  "license": "MIT",
+  "require": {
+    "php": ">=7.4",
+    "ext-curl": "*",
+    "ext-json": "*"
+  },
+  "autoload": {
+    "classmap": ["src/"]
+  }
+}
